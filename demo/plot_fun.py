@@ -72,7 +72,12 @@ def plot_vel_compare_result(vz1_vz2, time_length, dt, title=None):
     plt.subplot()
     plt.plot(dt_len, vz1_vz2, "-", color="red")
     if title:
-        plt.title(r"$\frac{V_{z}1}{V_{z}2}, $" + f"M1={title}, M2=0.5", fontsize=20)
+        if title[0] == "m":
+            plt.title(r"$\frac{V_{z}1}{V_{z}2}, $" + f"M1={title[1]}, M2=0.5", fontsize=20)
+        elif title[0] == "r":
+            plt.title(r"$\frac{V_{z}1}{V_{z}2}, $" + f"$r_1$ = ({title[1]}+0.5)$\cdot$0.2, $r_2$=0.1", fontsize=20)
+        else:
+            print("Error !")
     else:
         plt.title(r"$\frac{V_{z}1}{V_{z}2}$", fontsize=20)
     plt.xlabel("Time ($4.3\cdot 10^{15}$ years)", fontsize=10)

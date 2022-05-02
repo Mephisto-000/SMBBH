@@ -33,9 +33,9 @@ def poten(c, tmp_array, ratio_mass, r):
     return V
 
 
-def barycentric(eq_index, dt_step, tmp_array, bh_mass, gal_mass):
+def barycentric(eq_index, dt_step, tmp_array, bh_mass, gal_mass, ratio_change=0):
     m1, m2 = bh_mass[0], bh_mass[1]
-    ratio_m1 = m2/(m1 + m2)
+    ratio_m1 = (m2 + ratio_change)/(m1 + m2)
     ratio_m2 = m1/(m1 + m2)
 
     r1 = np.sqrt(tmp_array[0]**2 + tmp_array[1]**2 + tmp_array[2]**2)*ratio_m1
@@ -69,6 +69,8 @@ def barycentric(eq_index, dt_step, tmp_array, bh_mass, gal_mass):
         return -tmp_array[4]*ratio_m2 + poten(c, -tmp_array[1], ratio_m2, r2)
     elif eq_index == 11:
         return -tmp_array[5]*ratio_m2 + poten(c, -tmp_array[2], ratio_m2, r2)
+
+
 
 
 
