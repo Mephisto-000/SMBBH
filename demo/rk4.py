@@ -4,7 +4,7 @@ from tqdm import tqdm
 np.set_printoptions(precision=8)
 
 
-def rk4(eq, eq_bc, init_val, eq_amo, t_len, dt, bh_mass, gal_mass, G, ratio_change=0):
+def rk4(eq, eq_bc, init_val, eq_amo, t_len, dt, bh_mass, gal_mass, G, ratio_change=None):
     """
 
     :param eq: OD equation

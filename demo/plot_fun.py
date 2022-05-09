@@ -75,7 +75,9 @@ def plot_vel_compare_result(vz1_vz2, time_length, dt, title=None):
         if title[0] == "m":
             plt.title(r"$\frac{V_{z}1}{V_{z}2}, $" + f"M1={title[1]}, M2=0.5", fontsize=20)
         elif title[0] == "r":
-            plt.title(r"$\frac{V_{z}1}{V_{z}2}, $" + f"$r_1$ = ({title[1]}+0.5)$\cdot$0.2, $r_2$=0.1", fontsize=20)
+            plt.title(r"$\frac{V_{z}1}{V_{z}2}, $" + f"$r_1$ = (1/2)(1+{title[1][0]})$\cdot$0.2, "
+                                                     f"$r_2$ = (1/2)(1-{title[1][1]})$\cdot$0.2"
+                      , fontsize=20)
         else:
             print("Error !")
     else:
