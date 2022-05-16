@@ -123,3 +123,58 @@ def plot_orbit_video(result_array, R):
     anim_2b.save(f"test.mp4", writer=writer, dpi=300)
 
 
+
+def plot_centro_posXYZ(data, c_m_x, c_m_y, c_m_z, R):
+    ax_len = R / 2
+    x1, y1, z1 = data[1:, 0], data[1:, 1], data[1:, 2]
+    x2, y2, z2 = data[1:, 3], data[1:, 4], data[1:, 5]
+    z_project = np.ones(len(x1)) * -0.1
+    # fig = plt.figure(figsize=(30, 10))
+    plt.style.use("default")
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection="3d")
+    ax.set_xlim3d(-ax_len, ax_len)
+    ax.set_ylim3d(-ax_len, ax_len)
+    ax.set_zlim3d(-ax_len, ax_len)
+    ax.plot3D(x1, y1, z1, "blue", label="M1")
+    ax.plot3D(x2, y2, z2, "red", label="M2")
+    ax.plot3D(c_m_x, c_m_y, c_m_z, "green", label="Centroid")
+    ax.plot3D(c_m_x, c_m_y, z_project, "black", label="Centroid_z")
+    ax.scatter(c_m_x[0], c_m_y[0], c_m_z[0], "brown", label="First Position")
+    ax.scatter(c_m_x[0], c_m_y[0], z_project[0], "brown", label="First Position")
+    ax.set_xlabel('X [kpc]', fontsize=10)
+    ax.set_ylabel('Y [kpc]', fontsize=10)
+    ax.set_zlabel('Z [kpc]', fontsize=10)
+    ax.legend(loc="upper left", fontsize=10)
+    plt.show()
+
+
+def plot_centro_posXY(c_m_x, c_m_y, R):
+    ax_len = R / 2
+    plt.style.use("ggplot")
+    plt.figure(figsize=(5, 5))
+    plt.subplot()
+    plt.plot(c_m_x, c_m_y, "-", color="red")
+    plt.scatter(c_m_x[0], c_m_y[0], c="blue", label="First Position")
+    plt.scatter(0, 0, c="black", alpha=0.5, label="Original")
+    plt.xlim(-ax_len, ax_len)
+    plt.ylim(-ax_len, ax_len)
+    plt.xlabel("X[kpc]")
+    plt.ylabel("Y[kpc]")
+    plt.legend(loc="upper left", fontsize=10)
+    plt.show()
+
+
+def plot_centro_posZ(c_m_z, time_length, dt):
+    total_time = time_length*dt
+    dt_len = np.linspace(0, total_time, len(c_m_z))
+    plt.style.use("ggplot")
+    plt.figure(figsize=(10, 5))
+    plt.subplot()
+    plt.plot(dt_len, c_m_z, "-", color="red")
+    plt.title("Z orbit", fontsize=15)
+    plt.xlabel("Time ($4.3\cdot 10^{15}$ years)", fontsize=10)
+    plt.ylabel("Z[kpc]", fontsize=10)
+    plt.show()
+
+
