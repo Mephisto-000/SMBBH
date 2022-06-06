@@ -152,15 +152,15 @@ def plot_centro_posXYZ(data, c_m_x, c_m_y, c_m_z, R):
 def plot_centro_posXY(c_m_x, c_m_y, R):
     ax_len = R / 2
     plt.style.use("ggplot")
-    plt.figure(figsize=(5, 5))
+    plt.figure(figsize=(7, 7))
     plt.subplot()
     plt.plot(c_m_x, c_m_y, "-", color="red")
     plt.scatter(c_m_x[0], c_m_y[0], c="blue", label="First Position")
     plt.scatter(0, 0, c="black", alpha=0.5, label="Original")
     plt.xlim(-ax_len, ax_len)
     plt.ylim(-ax_len, ax_len)
-    plt.xlabel("X[kpc]")
     plt.ylabel("Y[kpc]")
+    plt.xlabel("X[kpc]")
     plt.legend(loc="upper left", fontsize=10)
     plt.show()
 
@@ -173,8 +173,8 @@ def plot_centro_posZ(c_m_z, time_length, dt):
     plt.subplot()
     plt.plot(dt_len, c_m_z, "-", color="red")
     plt.title("Z orbit", fontsize=15)
+    plt.ylabel("Z[kpc]")
     plt.xlabel("Time ($4.3\cdot 10^{15}$ years)", fontsize=10)
-    plt.ylabel("Z[kpc]", fontsize=10)
     plt.show()
 
 
