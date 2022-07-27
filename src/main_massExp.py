@@ -1,6 +1,7 @@
 import os
 import numpy as np
 import matplotlib.pyplot as plt
+from tqdm import tqdm
 from vel_fun import init_vel, init_vel_elliptical, period_set, compare_vel
 from rk4 import rk4
 from eq_sys import two_body_func, barycentric
@@ -58,11 +59,12 @@ def main():
     exp_rot_set = []
     exp_Vz_ratio = []
     
-    for m_set in mass_sets:
+    for m_set in tqdm(mass_sets):
         exp = rk4(two_body_func, barycentric, init_array, total_eqs, 
                     time_length, dt, 
                     m_set, gal_m, G)
         exp_set.append(exp)
+        pass
     
     for exp in exp_set:
         rot_exp = rotation_data(exp, omega, I, Omega)

@@ -1,5 +1,4 @@
 import numpy as np
-from tqdm import tqdm
 
 np.set_printoptions(precision=8)
 
@@ -30,7 +29,6 @@ def rk4(eq, eq_bc, init_val, eq_amo, t_len, dt, bh_mass, gal_mass, G, ratio_chan
     for index in range(eq_amo):
         result_array[0, index] = init_val[index]
 
-    pbar = tqdm(total=t_len+1)
     while time_tmp < t_len:
         for index in range(eq_amo):
             k1[index] = dt*eq(index, dt_step, result_array[time_tmp-1], mu)
@@ -57,7 +55,6 @@ def rk4(eq, eq_bc, init_val, eq_amo, t_len, dt, bh_mass, gal_mass, G, ratio_chan
 
         time_tmp += 1
         dt_step += dt
-        pbar.update(1)
     print("Done !")
 
     return result_array_barycentric
