@@ -4,7 +4,7 @@ from tqdm import tqdm
 np.set_printoptions(precision=8)
 
 
-def rk4(eq, eq_bc, init_val, eq_amo, t_len, dt, bh_mass, gal_mass, G):
+def rk4(eq, eq_bc, init_val, eq_amo, t_len, dt, bh_mass, gal_mass, G, ratio_change=None):
     """
 
     :param eq: OD equation
@@ -52,7 +52,8 @@ def rk4(eq, eq_bc, init_val, eq_amo, t_len, dt, bh_mass, gal_mass, G):
         for index in range(eq_amo*2):
             result_array_barycentric[time_tmp][index] = eq_bc(index, dt_step, result_array[time_tmp],
                                                               bh_mass,
-                                                              gal_mass)
+                                                              gal_mass,
+                                                              ratio_change)
 
         time_tmp += 1
         dt_step += dt

@@ -15,6 +15,7 @@ def projection_z_axis(result_array, bh_mass):
     v1_z = ro_m1_v_zaxis
     v2_z = ro_m2_v_zaxis
 
+    # m1*Vz1 & m2*Vz2 : 
     m1_v1 = ro_m1_v_zaxis * m1
     m2_v2 = ro_m2_v_zaxis * m2
 

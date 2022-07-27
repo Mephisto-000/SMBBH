@@ -9,6 +9,7 @@ def init_vel(m2, R, G):
 
 def init_vel_elliptical(e, init_vel_c):
     return np.sqrt((1-e)*init_vel_c**2)
+    # return np.sqrt((1+e)*init_vel_c**2)
 
 
 def period_set(R, p=1):
