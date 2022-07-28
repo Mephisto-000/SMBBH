@@ -87,7 +87,7 @@ def plot_vel_compare_result(vz1_vz2, time_length, dt, title=None):
     # plt.close()
 
 
-def plot_orbit_video(result_array, R):
+def plot_orbit_video(result_array, R, title=None):
     fig = plt.figure(figsize=(8, 8))
     ax = fig.add_subplot(111, projection='3d')
 
@@ -120,7 +120,10 @@ def plot_orbit_video(result_array, R):
 
     ani_writer = animation.writers['ffmpeg']
     writer = ani_writer(fps=200, metadata=dict(artist="Ling-Hao Lin"), bitrate=-1)
-    anim_2b.save(f"test.mp4", writer=writer, dpi=300)
+    if title is None:
+        anim_2b.save(f"test.mp4", writer=writer, dpi=300)
+    else:
+        anim_2b.save(f"{title}.mp4", writer=writer, dpi=300)
 
 
 
