@@ -71,6 +71,8 @@ def main():
         # plot_rk4_result(rot_exp, R)  # Check orbit is stable
         exp_rot_set.append(rot_exp)
     
+    # plot_orbit_video(exp_rot_set[4], R)  # Output the video
+    
     for rot_set, m_set in zip(exp_rot_set, mass_sets):
         m1v1, m2v2, Vz1, Vz2 = projection_z_axis(rot_set, m_set)
         Vz_ratio = compare_vel(Vz1, Vz2)

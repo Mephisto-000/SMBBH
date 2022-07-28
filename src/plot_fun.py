@@ -115,11 +115,11 @@ def plot_orbit_video(result_array, R):
 
         return orb1, orb2, header_1, header_2
 
-    anim_2b = FuncAnimation(fig, ani, frames=result_array[1:, 0].shape[0], interval=0.2, repeat=False, blit=False,
+    anim_2b = FuncAnimation(fig, ani, frames=result_array[1:, 0].shape[0], interval=0.0002, repeat=False, blit=False, save_count=100, 
                             fargs=(header_1, header_2))
 
     ani_writer = animation.writers['ffmpeg']
-    writer = ani_writer(fps=100, metadata=dict(artist="Ling-Hao Lin"), bitrate=-1)
+    writer = ani_writer(fps=200, metadata=dict(artist="Ling-Hao Lin"), bitrate=-1)
     anim_2b.save(f"test.mp4", writer=writer, dpi=300)
 
 
