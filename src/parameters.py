@@ -50,3 +50,6 @@ distance_exp2 = {"r_1" : np.array([0.0, 0.0]),
                  "r_5" : np.array([0.4, 0.4])}
 
 
+# TODO :  : eccentricity Exp.
+
+
