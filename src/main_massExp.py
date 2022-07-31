@@ -84,8 +84,10 @@ def main():
     plt.subplot()
     for ratio, m_set in zip(exp_Vz_ratio, mass_sets):
         plt.plot(dt_len, ratio, "-", label=f"M1 = {m_set[0]} $(M_\odot)$")
-    plt.title(r"$\frac{V_{z}1}{V_{z}2}$, fix M2", fontsize=20)
-    plt.xlabel("Time ($4.3\cdot 10^{15}$ years)", fontsize=10)
+    plt.title(r"Fix M2", fontsize=20)
+    plt.xlabel("Time ($4.3\cdot 10^{15}$ years)", fontsize=15)
+    plt.ylabel(r"$\frac{V_{z}1}{V_{z}2}$", fontsize=18, rotation=0, loc="top")
+
     
     ax = plt.gca()
     y_locator = plt.MultipleLocator(0.1)

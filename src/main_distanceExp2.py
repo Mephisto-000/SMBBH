@@ -80,8 +80,10 @@ def main():
     for ratio, r1_set in zip(exp_Vz_ratio, r12_exp_set):
         plt.plot(dt_len, ratio, "-", 
                 label=f"$\epsilon$ = {round(r1_set[0]*0.1, 4)} (kpc)")
-    plt.title(r"$\frac{V_{z}1}{V_{z}2}$, $r_{1}+\epsilon$, $r_{2}+\epsilon$", fontsize=20)
-    plt.xlabel("Time ($4.3\cdot 10^{15}$ years)", fontsize=10)
+    plt.title(r"$r_{1}+\epsilon$, $r_{2}+\epsilon$", fontsize=20)
+    plt.xlabel("Time ($4.3\cdot 10^{15}$ years)", fontsize=15)
+    plt.ylabel(r"$\frac{V_{z}1}{V_{z}2}$", fontsize=18, rotation=0, loc="top")
+
     
     ax = plt.gca()
     y_locator = plt.MultipleLocator(1)
