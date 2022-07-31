@@ -19,8 +19,8 @@ rot_para = {"omega" : np.pi / 6,
             "Omega" : np.pi / 6}
 
 
-init_para = {"m1" : 0.5,  # Sun Mass
-             "m2" : 0.5, 
+init_para = {"black_hole1_mass" : 0.5,  # Sun Mass
+             "black_hole2_mass" : 0.5, 
              "gravitational_constant" : 1,
              "distance" : 0.2,   # kpc 
              "eccentricity" : 0.5, 
@@ -35,18 +35,18 @@ mass_exp = {"m1_1" : 0.5,
             "m2": 0.5}
 
 
-distance_exp1 = {"r1_1" : 0.0, 
-                 "r1_2" : 0.1, 
-                 "r1_3" : 0.2, 
-                 "r1_4" : 0.3, 
-                 "r1_5" : 0.4}
+# distance + epsilon : np.array([r1's epsilon, r2's epsilon])
+distance_exp1 = {"r_1" : np.array([0.0, 0.0]), 
+                 "r_2" : np.array([0.1, 0.0]), 
+                 "r_3" : np.array([0.2, 0.0]), 
+                 "r_4" : np.array([0.3, 0.0]), 
+                 "r_5" : np.array([0.4, 0.0])}
 
 
 distance_exp2 = {"r_1" : np.array([0.0, 0.0]), 
                  "r_2" : np.array([0.1, 0.1]), 
                  "r_3" : np.array([0.2, 0.2]), 
                  "r_4" : np.array([0.3, 0.3]), 
-                 "r_5" : np.array([0.4, 0.4]), 
-                 "r_6" : np.array([0.5, 0.5])}
+                 "r_5" : np.array([0.4, 0.4])}
 
 

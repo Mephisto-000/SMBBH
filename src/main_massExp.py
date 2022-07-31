@@ -22,7 +22,6 @@ def main():
     e = init_para["eccentricity"]
     gal_m = init_para["galactic_mass"]
 
-
     omega = rot_para["omega"]
     I = rot_para["I"]
     Omega = rot_para["Omega"]
@@ -64,7 +63,6 @@ def main():
                     time_length, dt, 
                     m_set, gal_m, G)
         exp_set.append(exp)
-        pass
     
     for exp in exp_set:
         rot_exp = rotation_data(exp, omega, I, Omega)
