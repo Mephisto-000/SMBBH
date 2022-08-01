@@ -22,7 +22,7 @@ def main():
     gal_m = init_para["galactic_mass"]
     m1 = init_para["black_hole1_mass"]
     m2 = init_para["black_hole2_mass"]
-    m_set = [m1, 0.501]  # TODO : check !!!
+    m_set = [m1, m2]  # TODO : check !!!
 
     omega = rot_para["omega"]
     I = rot_para["I"]
