@@ -1,1 +1,5 @@
-.mp4
+*.mp4
+*.idea
+*.ipynb_checkpoints
+*.pdf
+__pycache__
