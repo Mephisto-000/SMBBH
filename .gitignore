@@ -3,4 +3,3 @@
 *.ipynb_checkpoints
 *.pdf
 __pycache__
-*.png
