@@ -33,9 +33,10 @@ if __name__ == "__main__":
             break
         elif test_command == "c4":
             plot1.plot_z_vel_ratio_result()
+            break
         elif test_command == "c5":
             plot1.plot_orbit_video(radius=0.2)
+            break
         else:
             os.system("clear")
             print("Input Error! Please input again.")
-            
