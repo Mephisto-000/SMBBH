@@ -1,3 +1,4 @@
+import os
 import numpy as np
 from smbbh_nu import SMBBH_NU
 from plot_process import Plot_Result
@@ -18,9 +19,23 @@ if __name__ == "__main__":
                             potential_function=potential_1)
     result_1 = experiment_1.all_result_output()
 
-    plot1 = Plot_Result(result_dict=result_1)
-    plot1.plot_rk4_result(radius=0.2)
-    plot1.plot_proj_z_vel()
-    plot1.plot_mv_err()
-    plot1.plot_z_vel_ratio_result()
-    plot1.plot_orbit_video(radius=0.2)
+    while True:
+        test_command = str(input("Please input the test case: "))
+        plot1 = Plot_Result(result_dict=result_1)
+        if test_command == "c1":
+            plot1.plot_rk4_result(radius=0.2)
+            break
+        elif test_command == "c2":
+            plot1.plot_proj_z_vel()
+            break
+        elif test_command == "c3":
+            plot1.plot_mv_err()
+            break
+        elif test_command == "c4":
+            plot1.plot_z_vel_ratio_result()
+        elif test_command == "c5":
+            plot1.plot_orbit_video(radius=0.2)
+        else:
+            os.system("clear")
+            print("Input Error! Please input again.")
+            
