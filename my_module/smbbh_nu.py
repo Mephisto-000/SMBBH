@@ -2,15 +2,17 @@ import numpy as np
 
 
 class SMBBH_NU:
-    def __init__(self, black_holes_mass, radius, eccentricity, angles, potential_function, mass_ratio=None):
+    def __init__(self, black_holes_mass, constant_c, radius, eccentricity, angles, potential_function, mass_ratio=None):
         self.__G = 1
-        self.__galaxy_mass = (1e+12 / 4e+6) * 0.5
+        self.__mass_unit = 1.2*(10**12)
         self.period = 10
         self.__eq_amount = 6
         self.__time_length = 1000
         self.__dt = 0.0005
 
-        self.bh_mass = black_holes_mass
+        self.bh_mass = [m_i/self.__mass_unit for m_i in black_holes_mass]
+        self.c = constant_c
+        self.galaxy_mass = self.c*(np.pi/2) / self.__G
         self.R = radius
         self.e = eccentricity
         self.init_c_vel = np.sqrt(self.__G*self.bh_mass[1] / self.R)
@@ -29,8 +31,7 @@ class SMBBH_NU:
         self.projection_z_velocity_list = []
         self.projection_z_velocity_ratio = []
 
-    @staticmethod
-    def __two_body_system(eq_index, dt_step, tmp_array, mu):
+    def __two_body_system(self, eq_index, dt_step, tmp_array, mu):
         r = np.sqrt(tmp_array[0]**2 + tmp_array[1]**2 + tmp_array[2]**2)
 
         if eq_index == 0:
@@ -49,7 +50,7 @@ class SMBBH_NU:
         else:
             return 0
 
-    def __barycentric(self, eq_index, dt_step, tmp_array, bh_mass, gal_mass, ratio_change):
+    def __barycentric(self, eq_index, dt_step, tmp_array, bh_mass, constant_c, ratio_change):
         if ratio_change is None:
             ratio_change = [0, 0]
         m1, m2 = bh_mass[0], bh_mass[1]
@@ -58,7 +59,6 @@ class SMBBH_NU:
 
         r1 = np.sqrt(tmp_array[0] ** 2 + tmp_array[1] ** 2 + tmp_array[2] ** 2) * ratio_m1
         r2 = np.sqrt(tmp_array[0] ** 2 + tmp_array[1] ** 2 + tmp_array[2] ** 2) * ratio_m2
-        c = gal_mass * 2 / np.pi
 
         if eq_index == 0:
             return tmp_array[0] * ratio_m1
@@ -75,18 +75,18 @@ class SMBBH_NU:
             return -tmp_array[2] * ratio_m2
 
         elif eq_index == 6:
-            return tmp_array[3] * ratio_m1 + self.poten(c, tmp_array[0], ratio_m1, r1)
+            return tmp_array[3] * ratio_m1 + self.poten(constant_c, tmp_array[0], ratio_m1, r1)
         elif eq_index == 7:
-            return tmp_array[4] * ratio_m1 + self.poten(c, tmp_array[1], ratio_m1, r1)
+            return tmp_array[4] * ratio_m1 + self.poten(constant_c, tmp_array[1], ratio_m1, r1)
         elif eq_index == 8:
-            return tmp_array[5] * ratio_m1 + self.poten(c, tmp_array[2], ratio_m1, r1)
+            return tmp_array[5] * ratio_m1 + self.poten(constant_c, tmp_array[2], ratio_m1, r1)
 
         elif eq_index == 9:
-            return -tmp_array[3] * ratio_m2 + self.poten(c, -tmp_array[0], ratio_m2, r2)
+            return -tmp_array[3] * ratio_m2 + self.poten(constant_c, -tmp_array[0], ratio_m2, r2)
         elif eq_index == 10:
-            return -tmp_array[4] * ratio_m2 + self.poten(c, -tmp_array[1], ratio_m2, r2)
+            return -tmp_array[4] * ratio_m2 + self.poten(constant_c, -tmp_array[1], ratio_m2, r2)
         elif eq_index == 11:
-            return -tmp_array[5] * ratio_m2 + self.poten(c, -tmp_array[2], ratio_m2, r2)
+            return -tmp_array[5] * ratio_m2 + self.poten(constant_c, -tmp_array[2], ratio_m2, r2)
 
     def rk4_process(self):
         m1, m2 = self.bh_mass
@@ -123,7 +123,7 @@ class SMBBH_NU:
                 self.result_array_barycentric_sys[time_tmp][index] = self.__barycentric(index, dt_step,
                                                                                         self.result_array[time_tmp],
                                                                                         self.bh_mass,
-                                                                                        self.__galaxy_mass,
+                                                                                        self.c,
                                                                                         self.mass_ratio)
 
             time_tmp += 1
