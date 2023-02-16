@@ -16,8 +16,8 @@ if __name__ == "__main__":
     total_smbbh_mass = 1.2*(10**12)
     black_hole_mass = [total_smbbh_mass/2, total_smbbh_mass/2]  # m1, m2
     angles = [np.pi/6, np.pi/4, np.pi/6]  # omega, I, Omega
-    constant_c = 1000
-    experiment_1 = SMBBH_NU(black_hole_mass, constant_c, radius=0.2, eccentricity=0, angles=angles,
+    constant_c = 0  # 1000
+    experiment_1 = SMBBH_NU(black_hole_mass, constant_c, radius=0.2, eccentricity=0.5, angles=angles,
                             potential_function=potential_1)
     result_1 = experiment_1.all_result_output()
 
