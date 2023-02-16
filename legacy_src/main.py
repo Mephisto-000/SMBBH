@@ -16,20 +16,20 @@ Length unit : kpc
 Time unit   : 4.3e+15 (Years)
 G = 1
 
-Mass of Galaxy (Milky Way) : ((0.8~1.5) * 1e+12).       Choose 1e+12 (Sun Mass)
-Black Hole (Milky Way)     : ((4.154 +/-0.014)*1e+6).   Choose 4e+6  (Sun Mass)
+Mass of Galaxy (M87)    : ((4.8~7) * 1e+12).  Choose 5.7e+12 (Sun Mass)
+Black Hole (M87)        : ((6.2~7)*1e+9).     Choose 6.4e+9  (Sun Mass)
 """
 
 
 if __name__ == "__main__":
-    m1 = 0.9
+    m1 = 0.5
     m2 = 0.5 # fix
     bh_mass = [m1, m2]
-    gal_mass = (1e+12 / 4e+6) * 0.5
+    gal_mass = (5.7e+12 / 6.4e+9) * 0.5
 
     G = 1
     R = 0.2
-    e = 0.8  # 0.8
+    e = 0.5  # 0.8
 
     omega = np.pi / 6
     I = np.pi / 4
