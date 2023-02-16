@@ -41,7 +41,7 @@ class Plot_Result:
     def plot_proj_z_vel(self):
         v1_z, v2_z = self.projection_z_velocity_list
         plt.style.use("ggplot")
-        total_time = self.time_length * self.dt
+        total_time = self.time_length / self.dt
         dt_len = np.linspace(0, total_time, self.time_length - 1)
         plt.figure()
         plt.subplot()
@@ -53,7 +53,7 @@ class Plot_Result:
         plt.show()
 
     def plot_mv_err(self):
-        total_time = self.time_length*self.dt
+        total_time = self.time_length / self.dt
         dt_len = np.linspace(0, total_time, len(self.momentum_err))
         plt.style.use("ggplot")
         plt.plot(dt_len, self.momentum_err, "-", color="red", label="$m_{1}*V_{z}1 - m_{2}*V_{z}2$")
@@ -63,7 +63,7 @@ class Plot_Result:
         plt.show()
 
     def plot_z_vel_ratio_result(self, title=None):
-        total_time = self.time_length * self.dt
+        total_time = self.time_length / self.dt
         dt_len = np.linspace(0, total_time, len(self.projection_z_velocity_ratio))
         plt.style.use("ggplot")
         plt.figure(figsize=(10, 5))
