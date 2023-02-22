@@ -148,11 +148,11 @@ class SMBBH_NU:
     def rotation_data(self):
         result_array = self.result_array_barycentric_sys
 
-        x1, y1, z1 = result_array[1:, 0], result_array[1:, 1], result_array[1:, 2]
-        x2, y2, z2 = result_array[1:, 3], result_array[1:, 4], result_array[1:, 5]
+        x1, y1, z1 = result_array[0:, 0], result_array[0:, 1], result_array[0:, 2]
+        x2, y2, z2 = result_array[0:, 3], result_array[0:, 4], result_array[0:, 5]
 
-        xv1, yv1, zv1 = result_array[1:, 6], result_array[1:, 7], result_array[1:, 8]
-        xv2, yv2, zv2 = result_array[1:, 9], result_array[1:, 10], result_array[1:, 11]
+        xv1, yv1, zv1 = result_array[0:, 6], result_array[0:, 7], result_array[0:, 8]
+        xv2, yv2, zv2 = result_array[0:, 9], result_array[0:, 10], result_array[0:, 11]
 
         m1_orb = np.array([x1, y1, z1])
         m2_orb = np.array([x2, y2, z2])
