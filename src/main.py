@@ -20,6 +20,7 @@ if __name__ == "__main__":
     experiment_1 = SMBBH_NU(black_hole_mass, constant_c, radius=0.2, eccentricity=0.5, angles=angles,
                             potential_function=potential_1)
     result_1 = experiment_1.all_result_output()
+    print(result_1["rot_data"].shape)
 
     while True:
         test_command = str(input("Please input the test case: "))
