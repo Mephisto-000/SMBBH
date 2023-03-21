@@ -39,14 +39,12 @@ class Plot_Result:
     def plot_total_energy(self):
         Et = self.total_energy
         plt.style.use("ggplot")
-        total_time = self.time_length / self.dt
-        dt_len = np.linspace(0, total_time, self.time_length - 1)
+        dt_len = np.linspace(0, self.time_length, self.time_length - 1)
         plt.figure()
         plt.subplot()
-        plt.plot(dt_len, Et, "-", color="darkblue", label=r"$V_{z}1$")
-        plt.legend(fontsize=15)
+        plt.plot(dt_len, Et, "-", color="darkblue")
+        plt.title(r'$E_{total}$', fontsize=20)
         plt.xlabel("Time ($4.3*10^{15}$ years)", fontsize=10)
-        plt.legend(loc="lower right", fontsize=10)
         plt.show()
 
     def plot_total_energy_divid_initE(self):
@@ -54,14 +52,12 @@ class Plot_Result:
         E0 = self.init_energy
         Et_E0 = Et / E0
         plt.style.use("ggplot")
-        total_time = self.time_length / self.dt
-        dt_len = np.linspace(0, total_time, self.time_length - 1)
+        dt_len = np.linspace(0, self.time_length, self.time_length - 1)
         plt.figure()
         plt.subplot()
-        plt.plot(dt_len, Et_E0, "-", color="darkblue", label=r"$E_{t}/E_{0}$")
-        plt.legend(fontsize=15)
+        plt.plot(dt_len, Et_E0, "-", color="darkblue")
+        plt.title(r'$E_{t}/E_{0}$', fontsize=20)
         plt.xlabel("Time ($4.3*10^{15}$ years)", fontsize=10)
-        plt.legend(loc="lower right", fontsize=10)
         plt.show()
 
     def plot_orbit_video(self, radius, mode="rotation_data", show_mode='plot', title=None):
