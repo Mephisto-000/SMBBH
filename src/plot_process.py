@@ -1,5 +1,5 @@
 import numpy as np
-import matplotlib.pylab as plt
+import matplotlib.pyplot as plt
 from matplotlib import animation
 from matplotlib.animation import FuncAnimation
 
@@ -40,7 +40,7 @@ class Plot_Result:
         Et = self.total_energy
         plt.style.use("ggplot")
         dt_len = np.linspace(0, self.time_length, self.time_length - 1)
-        plt.figure()
+        plt.figure(figsize=(10, 4))
         plt.subplot()
         plt.plot(dt_len, Et, "-", color="darkblue")
         plt.title(r'$E_{total}$', fontsize=20)
@@ -53,7 +53,7 @@ class Plot_Result:
         Et_E0 = Et / E0
         plt.style.use("ggplot")
         dt_len = np.linspace(0, self.time_length, self.time_length - 1)
-        plt.figure()
+        plt.figure(figsize=(10, 4))
         plt.subplot()
         plt.plot(dt_len, Et_E0, "-", color="darkblue")
         plt.title(r'$E_{total}/E_{0}$', fontsize=20)
@@ -108,3 +108,5 @@ class Plot_Result:
                 anim_2b.save(f"test.mp4", writer=writer, dpi=300)
             else:
                 anim_2b.save(f"{title}.mp4", writer=writer, dpi=300)
+        else:
+            return anim_2b
