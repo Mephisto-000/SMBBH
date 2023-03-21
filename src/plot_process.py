@@ -56,7 +56,7 @@ class Plot_Result:
         plt.figure()
         plt.subplot()
         plt.plot(dt_len, Et_E0, "-", color="darkblue")
-        plt.title(r'$E_{t}/E_{0}$', fontsize=20)
+        plt.title(r'$E_{total}/E_{0}$', fontsize=20)
         plt.xlabel("Time ($4.3*10^{15}$ years)", fontsize=10)
         plt.show()
 
