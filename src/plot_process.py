@@ -8,10 +8,8 @@ class Plot_Result:
     def __init__(self, result_dict):
         self.no_rot_data = result_dict['no_rot_data']
         self.rot_data = result_dict['rot_data']
-        self.momentum_list = result_dict['momentum_list']
-        self.momentum_err = result_dict['momentum_err']
-        self.projection_z_velocity_list = result_dict['projection_z_velocity_list']
-        self.projection_z_velocity_ratio = result_dict['projection_z_velocity_ratio']
+        self.total_energy = result_dict['total_energy']
+        self.init_energy = result_dict['initial_energy']
         self.time_length = result_dict['time_length']
         self.dt = result_dict['dt']
 
@@ -38,56 +36,39 @@ class Plot_Result:
         ax.legend(loc="upper left", fontsize=15)
         plt.show()
 
-    def plot_proj_z_vel(self):
-        v1_z, v2_z = self.projection_z_velocity_list
+    def plot_total_energy(self):
+        Et = self.total_energy
         plt.style.use("ggplot")
         total_time = self.time_length / self.dt
         dt_len = np.linspace(0, total_time, self.time_length - 1)
         plt.figure()
         plt.subplot()
-        plt.plot(dt_len, v1_z, "-", color="darkblue", label=r"$V_{z}1$")
-        plt.plot(dt_len, v2_z, "-", color="red", label=r"$V_{z}2$")
+        plt.plot(dt_len, Et, "-", color="darkblue", label=r"$V_{z}1$")
         plt.legend(fontsize=15)
         plt.xlabel("Time ($4.3*10^{15}$ years)", fontsize=10)
         plt.legend(loc="lower right", fontsize=10)
         plt.show()
 
-    def plot_mv_err(self):
-        total_time = self.time_length / self.dt
-        dt_len = np.linspace(0, total_time, len(self.momentum_err))
+    def plot_total_energy_divid_initE(self):
+        Et = self.total_energy
+        E0 = self.init_energy
+        Et_E0 = Et / E0
         plt.style.use("ggplot")
-        plt.plot(dt_len, self.momentum_err, "-", color="red", label="$m_{1}*V_{z}1 - m_{2}*V_{z}2$")
-        plt.axhline(y=0, color="green", linestyle="-.", label="$y=0$")
-        plt.xlabel("Time ($4.3\cdot 10^{15}$ years)", fontsize=20)
-        plt.legend(loc="lower right", fontsize=20)
-        plt.show()
-
-    def plot_z_vel_ratio_result(self, title=None):
         total_time = self.time_length / self.dt
-        dt_len = np.linspace(0, total_time, len(self.projection_z_velocity_ratio))
-        plt.style.use("ggplot")
-        plt.figure(figsize=(10, 5))
+        dt_len = np.linspace(0, total_time, self.time_length - 1)
+        plt.figure()
         plt.subplot()
-        plt.plot(dt_len, self.projection_z_velocity_ratio, "-", color="red")
-        if title:
-            if title[0] == "m":
-                plt.title(r"$\frac{V_{z}1}{V_{z}2}, $" + f"M1={title[1]}, M2=0.5", fontsize=20)
-            elif title[0] == "r":
-                plt.title(r"$\frac{V_{z}1}{V_{z}2}, $" + f"$r_1$ = (1/2)(1+{title[1][0]})$\cdot$0.2, "
-                                                         f"$r_2$ = (1/2)(1-{title[1][1]})$\cdot$0.2"
-                          , fontsize=20)
-            else:
-                print("Error !")
-        else:
-            plt.title(r"$\frac{V_{z}1}{V_{z}2}$", fontsize=20)
-        plt.xlabel("Time ($4.3\cdot 10^{15}$ years)", fontsize=10)
+        plt.plot(dt_len, Et_E0, "-", color="darkblue", label=r"$E_{t}/E_{0}$")
+        plt.legend(fontsize=15)
+        plt.xlabel("Time ($4.3*10^{15}$ years)", fontsize=10)
+        plt.legend(loc="lower right", fontsize=10)
         plt.show()
 
-    def plot_orbit_video(self, radius, mode="rotation_data", title=None):
+    def plot_orbit_video(self, radius, mode="rotation_data", show_mode='plot', title=None):
         if mode == "rotation_data":
-            result_array = self.rot_data
+            result_array = self.rot_data[1::50, :]
         else:
-            result_array = self.no_rot_data
+            result_array = self.no_rot_data[1::50, :]
         fig = plt.figure(figsize=(8, 8))
         ax = fig.add_subplot(111, projection='3d')
 
@@ -116,16 +97,18 @@ class Plot_Result:
 
             return orb1, orb2, header_1, header_2
 
-        anim_2b = FuncAnimation(fig, ani, frames=result_array[1:, 0].shape[0], interval=0.0002, repeat=False,
+        frames = result_array[1:, 0].shape[0]
+        interval = 0.001
+        anim_2b = FuncAnimation(fig, ani, frames=frames, interval=interval, repeat=False,
                                 blit=False, save_count=100,
                                 fargs=(header_1, header_2))
 
-        ani_writer = animation.writers['ffmpeg']
-        writer = ani_writer(fps=200, metadata=dict(artist="Ling-Hao Lin"), bitrate=-1)
-        if title is None:
-            anim_2b.save(f"test.mp4", writer=writer, dpi=300)
-        else:
-            anim_2b.save(f"{title}.mp4", writer=writer, dpi=300)
-
-
-
+        if show_mode == 'plot':
+            plt.show()
+        elif show_mode == 'save':
+            ani_writer = animation.writers['ffmpeg']
+            writer = ani_writer(fps=10, metadata=dict(artist="Ling-Hao Lin"), bitrate=-1)
+            if title is None:
+                anim_2b.save(f"test.mp4", writer=writer, dpi=300)
+            else:
+                anim_2b.save(f"{title}.mp4", writer=writer, dpi=300)

@@ -4,34 +4,34 @@ import numpy as np
 class SMBBH_NU:
     def __init__(self, black_holes_mass, constant_c, radius, eccentricity, angles, potential_function, mass_ratio=None):
         self.__G = 1
-        self.__mass_unit = 1.2*(10**12)
         self.period = 10
         self.__eq_amount = 6
-        self.__time_length = 1000
-        self.__dt = 0.0005
+        self.__time_length = 5*10**3  # 1000
+        self.__dt = 5*(10**(-4))          # 0.0005
 
-        self.bh_mass = [m_i/self.__mass_unit for m_i in black_holes_mass]
+        self.bh_mass = [m_i for m_i in black_holes_mass]
+        self.mass_ratio = mass_ratio
         self.c = constant_c
-        self.galaxy_mass = self.c*(np.pi/2) / self.__G
-        self.R = radius
+        self.r = radius
         self.e = eccentricity
-        self.init_c_vel = np.sqrt(self.__G*self.bh_mass[1] / self.R)
-        self.init_e_vel = np.sqrt((1 - self.e)*self.init_c_vel**2)
-        self.init_array = np.array([self.R, 0.0, 0.0,
-                                    0.0, self.init_e_vel, 0.0])
         self.angles = angles
         self.rot_mat = np.identity(3)
-        self.mass_ratio = mass_ratio
-        self.poten = potential_function
+        self.potential = potential_function
+
+        self.init_c_vel = np.sqrt(self.__G*self.bh_mass[1] / self.r)
+        self.init_e_vel = np.sqrt((1 - self.e)*(self.init_c_vel**2))
+
+        self.init_single_bh_array = np.array([self.r, 0.0, 0.0,
+                                              0.0, self.init_e_vel, 0.0])
         self.result_array = np.ones((self.__time_length, self.__eq_amount))
         self.result_array_barycentric_sys = np.ones((self.__time_length, self.__eq_amount*2))
-        self.rotation_result = None
-        self.momentum_list = []
-        self.momentum_err = 0
-        self.projection_z_velocity_list = []
-        self.projection_z_velocity_ratio = []
 
-    def __two_body_system(self, eq_index, dt_step, tmp_array, mu):
+        self.rotation_result = None
+        self.energy = None
+        self.energy_0 = None
+
+    @staticmethod
+    def __two_body_system(eq_index, dt_step, tmp_array, mu):
         r = np.sqrt(tmp_array[0]**2 + tmp_array[1]**2 + tmp_array[2]**2)
 
         if eq_index == 0:
@@ -75,18 +75,18 @@ class SMBBH_NU:
             return -tmp_array[2] * ratio_m2
 
         elif eq_index == 6:
-            return tmp_array[3] * ratio_m1 + self.poten(constant_c, tmp_array[0], ratio_m1, r1)
+            return tmp_array[3] * ratio_m1 + self.potential(constant_c, tmp_array[0], ratio_m1, r1)
         elif eq_index == 7:
-            return tmp_array[4] * ratio_m1 + self.poten(constant_c, tmp_array[1], ratio_m1, r1)
+            return tmp_array[4] * ratio_m1 + self.potential(constant_c, tmp_array[1], ratio_m1, r1)
         elif eq_index == 8:
-            return tmp_array[5] * ratio_m1 + self.poten(constant_c, tmp_array[2], ratio_m1, r1)
+            return tmp_array[5] * ratio_m1 + self.potential(constant_c, tmp_array[2], ratio_m1, r1)
 
         elif eq_index == 9:
-            return -tmp_array[3] * ratio_m2 + self.poten(constant_c, -tmp_array[0], ratio_m2, r2)
+            return -tmp_array[3] * ratio_m2 + self.potential(constant_c, -tmp_array[0], ratio_m2, r2)
         elif eq_index == 10:
-            return -tmp_array[4] * ratio_m2 + self.poten(constant_c, -tmp_array[1], ratio_m2, r2)
+            return -tmp_array[4] * ratio_m2 + self.potential(constant_c, -tmp_array[1], ratio_m2, r2)
         elif eq_index == 11:
-            return -tmp_array[5] * ratio_m2 + self.poten(constant_c, -tmp_array[2], ratio_m2, r2)
+            return -tmp_array[5] * ratio_m2 + self.potential(constant_c, -tmp_array[2], ratio_m2, r2)
 
     def rk4_process(self):
         m1, m2 = self.bh_mass
@@ -99,7 +99,7 @@ class SMBBH_NU:
         dt_step = 0
 
         for index in range(self.__eq_amount):
-            self.result_array[0, index] = self.init_array[index]
+            self.result_array[0, index] = self.init_single_bh_array[index]
 
         while time_tmp < self.__time_length:
             for index in range(self.__eq_amount):
@@ -168,49 +168,39 @@ class SMBBH_NU:
         ro_data = np.hstack([ro1_data, ro2_data, ro1v_data, ro2v_data])
         self.rotation_result = ro_data
 
-    def projection_z_axis(self):
-        m1, m2 = self.bh_mass
-        axis_z = np.array([0, 0, 1]).reshape((3, 1))
-        m1_v = self.rotation_result[:, 6:9]
-        m2_v = self.rotation_result[:, 9:12]
+    def cal_total_energy(self):
+        result_array = self.rotation_result
+        mass_sum = np.sum(self.bh_mass)
 
-        ro_m1_v_zaxis = np.dot(m1_v, axis_z)
-        ro_m2_v_zaxis = np.dot(m2_v, axis_z)
+        x1, y1, z1 = result_array[0:, 0], result_array[0:, 1], result_array[0:, 2]
+        x2, y2, z2 = result_array[0:, 3], result_array[0:, 4], result_array[0:, 5]
 
-        v1_z = ro_m1_v_zaxis
-        v2_z = ro_m2_v_zaxis
+        r1 = np.sqrt(x1**2 + y1**2 + z1**2)
+        r2 = np.sqrt(x2**2 + y2**2 + z2**2)
 
-        # m1*Vz1 & m2*Vz2 :
-        m1_v1 = ro_m1_v_zaxis * m1
-        m2_v2 = ro_m2_v_zaxis * m2
+        xv1, yv1, zv1 = result_array[0:, 6], result_array[0:, 7], result_array[0:, 8]
+        xv2, yv2, zv2 = result_array[0:, 9], result_array[0:, 10], result_array[0:, 11]
 
-        self.momentum_list = [m1_v1, m2_v2]
-        self.projection_z_velocity_list = [v1_z, v2_z]
-        self.projection_z_velocity_ratio = v1_z / v2_z
+        E1 = 0.5*(xv1**2 + yv1**2 + zv1**2) - (mass_sum/r1) - self.c*(np.arctan(r1)/r1)
+        E2 = 0.5*(xv2**2 + yv2**2 + zv2**2) - (mass_sum/r2) - self.c*(np.arctan(r2)/r2)
+        total_E = E1[1:] + E2[1:]
 
-    def mv_err(self):
-        f = self.momentum_list[0] - self.momentum_list[1]
-        f = f.flatten()
-        self.momentum_err = f
+        self.energy = total_E
+        self.energy_0 = total_E[0]
 
     # Output all result :
-    def all_result_output(self):
+    def run(self):
         print("Begin Simulation of Supermassive Binary Black Holes : ")
         self.rk4_process()
         self.rotation_data()
-        self.projection_z_axis()
-        self.mv_err()
+        self.cal_total_energy()
         print("All Processes Done !")
 
         all_results = {'no_rot_data': self.result_array_barycentric_sys,
                        'rot_data': self.rotation_result,
-                       'momentum_list': self.momentum_list,
-                       'momentum_err': self.momentum_err,
-                       'projection_z_velocity_list': self.projection_z_velocity_list,
-                       'projection_z_velocity_ratio': self.projection_z_velocity_ratio,
+                       'total_energy': self.energy,
+                       'initial_energy': self.energy_0,
                        'time_length': self.__time_length,
                        'dt': self.__dt}
 
         return all_results
-
-

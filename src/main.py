@@ -13,31 +13,34 @@ def potential_1(constant_c, tmp_array, ratio_mass, r):
 
 
 if __name__ == "__main__":
-    total_smbbh_mass = 1.2*(10**12)
-    black_hole_mass = [total_smbbh_mass/2, total_smbbh_mass/2]  # m1, m2
+    black_hole_mass = [0.5, 0.5]  # m1, m2
+    radius = 0.5
+    eccentricity = 0
     angles = [np.pi/6, np.pi/4, np.pi/6]  # omega, I, Omega
     constant_c = 0  # 1000
-    experiment_1 = SMBBH_NU(black_hole_mass, constant_c, radius=0.2, eccentricity=0.5, angles=angles,
+    experiment_1 = SMBBH_NU(black_hole_mass,
+                            constant_c,
+                            radius=radius,
+                            eccentricity=eccentricity,
+                            angles=angles,
                             potential_function=potential_1)
-    result_1 = experiment_1.all_result_output()
+    result_1 = experiment_1.run()
 
     while True:
         test_command = str(input("Please input the test case: "))
         plot1 = Plot_Result(result_dict=result_1)
         if test_command == "c1":
-            plot1.plot_rk4_result(radius=0.2)
+            plot1.plot_rk4_result(radius=radius)
             break
         elif test_command == "c2":
-            plot1.plot_proj_z_vel()
+            plot1.plot_total_energy()
             break
         elif test_command == "c3":
-            plot1.plot_mv_err()
+            plot1.plot_total_energy_divid_initE()
             break
         elif test_command == "c4":
-            plot1.plot_z_vel_ratio_result()
-            break
-        elif test_command == "c5":
-            plot1.plot_orbit_video(radius=0.05)
+            show_mode = input("Please choose show mode [plot/save] : ")
+            plot1.plot_orbit_video(radius=0.05, show_mode=show_mode)
             break
         else:
             os.system("clear")
