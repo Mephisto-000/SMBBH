@@ -13,7 +13,7 @@ def potential_1(constant_c, tmp_array, ratio_mass, r):
 
 
 if __name__ == "__main__":
-    black_hole_mass = [0.5, 0.5]  # m1, m2
+    black_hole_mass = [0.5, 0.5]  # m1(0.5), m2(0.5)
     radius = 0.5
     eccentricity = 0
     angles = [np.pi/6, np.pi/4, np.pi/6]  # omega, I, Omega
