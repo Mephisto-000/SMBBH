@@ -2,29 +2,29 @@ import numpy as np
 
 
 class SMBBH_NU:
-    def __init__(self, black_holes_mass, constant_c, radius, eccentricity, angles, potential_function, mass_ratio=None):
+    def __init__(self, black_holes_mass, time_length=5*10**3, dt=5*(10**(-4)), mass_ratio=None, **kwargs):
         self.__G = 1
         self.period = 10
         self.__eq_amount = 6
-        self.__time_length = 5*10**3  # 1000
-        self.__dt = 5*(10**(-4))          # 0.0005
+        self.time_length = time_length    # 1000
+        self.dt = dt                      # 0.0005
 
         self.bh_mass = [m_i for m_i in black_holes_mass]
         self.mass_ratio = mass_ratio
-        self.c = constant_c
-        self.r = radius
-        self.e = eccentricity
-        self.angles = angles
+        self.c = kwargs['constant_c']
+        self.r = kwargs['radius']
+        self.e = kwargs['eccentricity']
+        self.angles = kwargs['angles']
         self.rot_mat = np.identity(3)
-        self.potential = potential_function
+        self.potential = kwargs['potential_function']
 
         self.init_c_vel = np.sqrt(self.__G*self.bh_mass[1] / self.r)
         self.init_e_vel = np.sqrt((1 - self.e)*(self.init_c_vel**2))
 
         self.init_single_bh_array = np.array([self.r, 0.0, 0.0,
                                               0.0, self.init_e_vel, 0.0])
-        self.result_array = np.ones((self.__time_length, self.__eq_amount))
-        self.result_array_barycentric_sys = np.ones((self.__time_length, self.__eq_amount*2))
+        self.result_array = np.ones((self.time_length, self.__eq_amount))
+        self.result_array_barycentric_sys = np.ones((self.time_length, self.__eq_amount*2))
 
         self.rotation_result = None
         self.energy = None
@@ -101,18 +101,18 @@ class SMBBH_NU:
         for index in range(self.__eq_amount):
             self.result_array[0, index] = self.init_single_bh_array[index]
 
-        while time_tmp < self.__time_length:
+        while time_tmp < self.time_length:
             for index in range(self.__eq_amount):
-                k1[index] = self.__dt*self.__two_body_system(index, dt_step, self.result_array[time_tmp - 1], mu)
+                k1[index] = self.dt*self.__two_body_system(index, dt_step, self.result_array[time_tmp - 1], mu)
                 v1[index] = self.result_array[time_tmp - 1][index] + 0.5*k1[index]
             for index in range(self.__eq_amount):
-                k2[index] = self.__dt*self.__two_body_system(index, dt_step + 0.5*self.__dt, v1, mu)
+                k2[index] = self.dt*self.__two_body_system(index, dt_step + 0.5*self.dt, v1, mu)
                 v2[index] = self.result_array[time_tmp - 1][index] + 0.5*k2[index]
             for index in range(self.__eq_amount):
-                k3[index] = self.__dt*self.__two_body_system(index, dt_step + 0.5*self.__dt, v2, mu)
+                k3[index] = self.dt*self.__two_body_system(index, dt_step + 0.5*self.dt, v2, mu)
                 v3[index] = self.result_array[time_tmp - 1][index] + k3[index]
             for index in range(self.__eq_amount):
-                k4[index] = self.__dt*self.__two_body_system(index, dt_step + self.__dt, v3, mu)
+                k4[index] = self.dt*self.__two_body_system(index, dt_step + self.dt, v3, mu)
 
             for index in range(self.__eq_amount):
                 estimate_term = (k1[index] + 2*k2[index] + 2*k3[index] + k4[index]) / 6.0
@@ -127,7 +127,7 @@ class SMBBH_NU:
                                                                                         self.mass_ratio)
 
             time_tmp += 1
-            dt_step += self.__dt
+            dt_step += self.dt
         print("rk4 process done !")
 
     def rotation_mat(self):
@@ -200,7 +200,7 @@ class SMBBH_NU:
                        'rot_data': self.rotation_result,
                        'total_energy': self.energy,
                        'initial_energy': self.energy_0,
-                       'time_length': self.__time_length,
-                       'dt': self.__dt}
+                       'time_length': self.time_length,
+                       'dt': self.dt}
 
         return all_results

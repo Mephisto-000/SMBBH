@@ -43,7 +43,7 @@ class Plot_Result:
         plt.figure(figsize=(10, 4))
         plt.subplot()
         plt.plot(dt_len, Et, "-", color="darkblue")
-        plt.title(r'$E_{total}$', fontsize=20)
+        plt.title(r'$E_{total}$,' + r' ($Max(|E_{total}|)\approx$' + f'{round(max(np.abs(Et)), 4)})', fontsize=20)
         plt.xlabel("Time ($4.3*10^{15}$ years)", fontsize=10)
         plt.show()
 
@@ -56,7 +56,7 @@ class Plot_Result:
         plt.figure(figsize=(10, 4))
         plt.subplot()
         plt.plot(dt_len, Et_E0, "-", color="darkblue")
-        plt.title(r'$E_{total}/E_{0}$', fontsize=20)
+        plt.title(r'$E_{total}/E_{0}$,' + rf' ($E_{0}\approx$ {round(E0, 4)})', fontsize=20)
         plt.xlabel("Time ($4.3*10^{15}$ years)", fontsize=10)
         plt.show()
 
