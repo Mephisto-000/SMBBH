@@ -19,7 +19,7 @@ if __name__ == "__main__":
     angles = [np.pi/6, np.pi/4, np.pi/6]  # omega, I, Omega
     constant_c = 0  # 1000
     experiment_1 = SMBBH_NU(black_hole_mass,
-                            constant_c,
+                            constant_c=constant_c,
                             radius=radius,
                             eccentricity=eccentricity,
                             angles=angles,
