@@ -62,7 +62,8 @@ class Plot_Result:
         plt.figure(figsize=(10, 4))
         plt.subplot()
         plt.plot(self.time_length, total_energy, "-", color="darkblue")
-        plt.title(r'$E_{total}$,' + r' ($Max(|E_{total}|)\approx$' + f'{round(max(np.abs(total_energy)), 4)})', fontsize=20)
+        plt.title(r'$E_{total}$,' + r' ($Max(|E_{total}|)\approx$' + f'{round(max(np.abs(total_energy)), 4)})',
+                  fontsize=20)
         plt.xlabel("Time ($4.3*10^{15}$ years)", fontsize=10)
         plt.show()
 
@@ -151,4 +152,3 @@ class Plot_Result:
                 anim_2b.save(f"{title}.mp4", writer=writer, dpi=300)
         else:
             return anim_2b
-

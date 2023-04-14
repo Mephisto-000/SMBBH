@@ -68,5 +68,3 @@ if __name__ == "__main__":
             plot.plot_orbit_video(mode=rot_mod, show_mode="save")
         else:
             print("Input Error! Please input again.")
-
-

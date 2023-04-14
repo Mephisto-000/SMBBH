@@ -168,7 +168,6 @@ class SMBBH_NU:
                            'p1_velocity': rot_v1,
                            'p2_velocity': rot_v2}
 
-
     def cal_total_energy(self):
         no_rot_data = self.noRot_result
         rot_data = self.rot_result
@@ -238,12 +237,3 @@ class SMBBH_NU:
                       'rot_energy0': self.energy_0}
 
         return all_result
-
-
-
-
-
-
-
-
-
