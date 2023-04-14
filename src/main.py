@@ -4,44 +4,69 @@ from smbbh_nu import SMBBH_NU
 from plot_process import Plot_Result
 
 
-def potential_1(constant_c, tmp_array, ratio_mass, r):
-    ratio_term = constant_c*(tmp_array*ratio_mass/r)
+def potential_1(constant_c, comp_vector, r):
+    c_term = (constant_c*comp_vector) / r
     first_term = 1/(r + r**3)
     second_term = np.arctan(r)/(r**2)
-    V = ratio_term*(first_term - second_term)
+    V = c_term*(first_term - second_term)
     return V
 
 
 if __name__ == "__main__":
     black_hole_mass = [0.5, 0.5]  # m1(0.5), m2(0.5)
-    radius = 0.5
-    eccentricity = 0
+    t_0 = 0
+    t_f = 50
+    radius = 2  # 2
+    eccentricity = 0.7  # 0.7
     angles = [np.pi/6, np.pi/4, np.pi/6]  # omega, I, Omega
-    constant_c = 0  # 1000
+    # angles = [0.0, 0.0, 0.0]  # omega, I, Omega
+    constant_c = 0.9  # 1.0, 0.99, 0.9, 0.8
+
     experiment_1 = SMBBH_NU(black_hole_mass,
+                            t0=t_0,
+                            tf=t_f,
                             constant_c=constant_c,
                             radius=radius,
                             eccentricity=eccentricity,
                             angles=angles,
                             potential_function=potential_1)
-    result_1 = experiment_1.run()
+
+    exp_dict = experiment_1.run()
 
     while True:
+        os.system("clear")
+        print()
+        print("To display the trajectory chart for the supermassive binary black hole orbit, please press 'c1'")
+        print("To display the total energy change chart for the supermassive binary black holes, please press 'c2'")
+        print("To display the total energy change divided by the initial total energy chart for the "
+              "supermassive binary black holes, please press 'c3'")
+        print("To display the video of the trajectory chart for the supermassive binary black hole "
+              "orbit, please press 'c4'")
+        print("To save the video of the trajectory chart for the supermassive binary black hole "
+              "orbit, please press 'c5'")
+        print("To exit, please press 'q'")
+        print()
+        print()
+
         test_command = str(input("Please input the test case: "))
-        plot1 = Plot_Result(result_dict=result_1)
+        if test_command == "q":
+            break
+
+        rot_command = str(input("Would you like to rotate the binary black hole orbit trajectory in 3D? [y]/n : "))
+        rot_mod = "rotation" if rot_command == "y" else "no_rotation"
+        plot = Plot_Result(exp_dict, radius, t_0, t_f)
+
         if test_command == "c1":
-            plot1.plot_rk4_result(radius=radius)
-            break
+            plot.plot_rk4_result(mode=rot_mod)
         elif test_command == "c2":
-            plot1.plot_total_energy()
-            break
+            plot.plot_total_energy(mode=rot_mod)
         elif test_command == "c3":
-            plot1.plot_total_energy_divid_initE()
-            break
+            plot.plot_total_energy_divid_initE(mode=rot_mod)
         elif test_command == "c4":
-            show_mode = input("Please choose show mode [plot/save] : ")
-            plot1.plot_orbit_video(radius=0.05, show_mode=show_mode)
-            break
+            plot.plot_orbit_video(mode=rot_mod)
+        elif test_command == "c5":
+            plot.plot_orbit_video(mode=rot_mod, show_mode="save")
         else:
-            os.system("clear")
             print("Input Error! Please input again.")
+
+
