@@ -1,5 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
 
 
 class SMBBH_NU:
@@ -201,14 +200,14 @@ class SMBBH_NU:
         no_rotE2 = 0.5*(n_xv2**2 + n_yv2**2 + n_zv2**2) - (mass_sum/nr2) - self.c*(np.arctan(nr2)/nr2)
         no_rot_total_E = no_rotE1 + no_rotE2
 
-        E1 = 0.5*(xv1**2 + yv1**2 + zv1**2) - (mass_sum/r1) - self.c*(np.arctan(r1)/r1)
-        E2 = 0.5*(xv2**2 + yv2**2 + zv2**2) - (mass_sum/r2) - self.c*(np.arctan(r2)/r2)
-        total_E = E1 + E2
+        rotE1 = 0.5*(xv1**2 + yv1**2 + zv1**2) - (mass_sum/r1) - self.c*(np.arctan(r1)/r1)
+        rotE2 = 0.5*(xv2**2 + yv2**2 + zv2**2) - (mass_sum/r2) - self.c*(np.arctan(r2)/r2)
+        rot_total_E = rotE1 + rotE2
 
         self.no_rot_energy = no_rot_total_E
         self.no_rot_energy_0 = no_rot_total_E[0]
-        self.energy = total_E
-        self.energy_0 = total_E[0]
+        self.energy = rot_total_E
+        self.energy_0 = rot_total_E[0]
 
     def run(self):
         self.no_rot_result()
