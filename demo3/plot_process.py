@@ -41,11 +41,11 @@ class Plot_Result:
         ax.set_xlim3d(-ax_len, ax_len)
         ax.set_ylim3d(-ax_len, ax_len)
         ax.set_zlim3d(-ax_len, ax_len)
-        ax.plot(r1[:, 0], r1[:, 1], r1[:, 2], color='darkblue', alpha=0.4,  label="p1 orbit")
-        ax.plot(r2[:, 0], r2[:, 1], r2[:, 2], color='red', alpha=0.4, label="p2 orbit")
-        ax.plot(r1[0, 0], r1[0, 1], r1[0, 2], "bo", label="p1 orbit (t=0)")
-        ax.plot(r2[0, 0], r2[0, 1], r2[0, 2], "ro", label="p2 orbit (t=0)")
-        ax.plot(0, 0, 0, 'ko', label="COG")
+        ax.plot(r1[:, 0], r1[:, 1], r1[:, 2], color='darkblue', alpha=0.4,  label="P1 orbit")
+        ax.plot(r2[:, 0], r2[:, 1], r2[:, 2], color='red', alpha=0.4, label="P2 orbit")
+        ax.plot(r1[0, 0], r1[0, 1], r1[0, 2], "bo", label="P1 orbit (t=0)")
+        ax.plot(r2[0, 0], r2[0, 1], r2[0, 2], "ro", label="P2 orbit (t=0)")
+        ax.plot(0, 0, 0, 'ko', label=r"O, $(0, 0, 0)$")
         ax.legend()
         plt.show()
 
@@ -111,9 +111,9 @@ class Plot_Result:
         ax.set_zlim3d(-ax_len, ax_len)
 
         header_1 = [ax.scatter(r1[:, 0][0], r1[:, 1][0], r1[:, 2][0],
-                               color="darkblue", marker="o", s=85, label="M1")]
+                               color="darkblue", marker="o", s=85, label="P1")]
         header_2 = [ax.scatter(r2[:, 0][0], r2[:, 1][0], r2[:, 2][0],
-                               color="red", marker="o", s=85, label="M2")]
+                               color="red", marker="o", s=85, label="P2")]
 
         ax.set_xlabel("X", fontsize=14)
         ax.set_ylabel("Y", fontsize=14)
