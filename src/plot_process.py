@@ -64,7 +64,7 @@ class Plot_Result:
         plt.plot(self.time_length, total_energy, "-", color="darkblue")
         plt.title(r'$E_{total}$,' + r' ($Max(|E_{total}|)\approx$' + f'{round(max(np.abs(total_energy)), 4)})',
                   fontsize=20)
-        plt.xlabel("Time ($4.3*10^{15}$ years)", fontsize=10)
+        plt.xlabel("Time", fontsize=10)
         plt.show()
 
     def plot_total_energy_divid_initE(self, mode="rotation"):
@@ -85,7 +85,7 @@ class Plot_Result:
         plt.subplot()
         plt.plot(self.time_length, Et_divid_E0, "-", color="darkblue")
         plt.title(r'$E_{total}/E_{0}$,' + rf' ($E_{0}\approx$ {round(initial_energy, 4)})', fontsize=20)
-        plt.xlabel("Time ($4.3*10^{15}$ years)", fontsize=10)
+        plt.xlabel("Time", fontsize=10)
         plt.show()
 
     def plot_orbit_video(self, mode="rotation", show_mode='plot', title=None):
