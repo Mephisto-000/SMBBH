@@ -23,8 +23,8 @@ class SMBBH_NU:
         self.init_c_vel = np.sqrt(self.__G*self.bh_mass['m1'] / self.r)
         self.init_e_vel = np.sqrt((1 - self.e)*(self.init_c_vel**2))
 
-        self.r1_0 = np.array([self.r, 0.0, 0.0])
-        self.r2_0 = np.array([0.0, 0.0, 0.0])
+        self.r1_0 = np.array([self.r*0.5, 0.0, 0.0])
+        self.r2_0 = np.array([-self.r*0.5, 0.0, 0.0])
         self.v1_0 = np.array([0.0, self.init_e_vel, 0.0])
         self.v2_0 = np.array([0.0, -self.init_e_vel, 0.0])
 
@@ -45,7 +45,12 @@ class SMBBH_NU:
         yi = tmp_array[4] - tmp_array[1]
         zi = tmp_array[5] - tmp_array[2]
 
+        x1, y1, z1 = tmp_array[0], tmp_array[1], tmp_array[2]
+        x2, y2, z2 = tmp_array[3], tmp_array[4], tmp_array[5]
+
         r = np.sqrt(xi**2 + yi**2 + zi**2)
+        r1 = np.sqrt(x1**2 + y1**2 + z1**2)
+        r2 = np.sqrt(x2**2 + y2**2 + z2**2)
 
         # particle 1 orbit
         if eq_index == 0:
@@ -65,19 +70,19 @@ class SMBBH_NU:
 
         # particle 1 velocity
         elif eq_index == 6:
-            return mu * xi / (r ** 3) + self.potential(self.c, xi, r)
+            return mu * xi / (r ** 3) + self.potential(self.c, x1, r1)
         elif eq_index == 7:
-            return mu * yi / (r ** 3) + self.potential(self.c, yi, r)
+            return mu * yi / (r ** 3) + self.potential(self.c, y1, r1)
         elif eq_index == 8:
-            return mu * zi / (r ** 3) + self.potential(self.c, zi, r)
+            return mu * zi / (r ** 3) + self.potential(self.c, z1, r1)
 
         # particle 2 velocity
         elif eq_index == 9:
-            return -mu * xi / (r ** 3) - self.potential(self.c, xi, r)
+            return -mu * xi / (r ** 3) - self.potential(self.c, x2, r2)
         elif eq_index == 10:
-            return -mu * yi / (r ** 3) - self.potential(self.c, yi, r)
+            return -mu * yi / (r ** 3) - self.potential(self.c, y2, r2)
         elif eq_index == 11:
-            return -mu * zi / (r ** 3) - self.potential(self.c, zi, r)
+            return -mu * zi / (r ** 3) - self.potential(self.c, z2, r2)
 
         else:
             return 0
@@ -121,11 +126,12 @@ class SMBBH_NU:
         v1, v2 = self.y_noRot[:, 6:9], self.y_noRot[:, 9:]
 
         barycenter = (m1*r1 + m2*r2) / (m1 + m2)
+        barycenter_v = (m1*v1 + m2*v2) / (m1 + m2)
 
         r1_relation_com = r1 - barycenter
         r2_relation_com = r2 - barycenter
-        v1_relation_com = v1
-        v2_relation_com = v2
+        v1_relation_com = v1 - barycenter_v
+        v2_relation_com = v2 - barycenter_v
         no_rot_dict = {'p1_orbit': r1_relation_com,
                        'p2_orbit': r2_relation_com,
                        'p1_velocity': v1_relation_com,
@@ -170,7 +176,9 @@ class SMBBH_NU:
     def cal_total_energy(self):
         no_rot_data = self.noRot_result
         rot_data = self.rot_result
-        mass_sum = self.bh_mass['m1'] + self.bh_mass['m2']
+        m1 = self.bh_mass['m1']
+        m2 = self.bh_mass['m2']
+        mass_sum = m1 + m2
 
         nx1, ny1, nz1 = no_rot_data['p1_orbit'][:, 0], no_rot_data['p1_orbit'][:, 1], no_rot_data['p1_orbit'][:, 2]
         nx2, ny2, nz2 = no_rot_data['p2_orbit'][:, 0], no_rot_data['p2_orbit'][:, 1], no_rot_data['p2_orbit'][:, 2]
@@ -196,12 +204,12 @@ class SMBBH_NU:
         yv2 = rot_data['p2_velocity'][0:, 1]
         zv2 = rot_data['p2_velocity'][0:, 2]
 
-        no_rotE1 = 0.5*(n_xv1**2 + n_yv1**2 + n_zv1**2) - (mass_sum/nr1) - self.c*(np.arctan(nr1)/nr1)
-        no_rotE2 = 0.5*(n_xv2**2 + n_yv2**2 + n_zv2**2) - (mass_sum/nr2) - self.c*(np.arctan(nr2)/nr2)
+        no_rotE1 = 0.5*(n_xv1**2 + n_yv1**2 + n_zv1**2) - (m2**3/(nr1*mass_sum**2)) - self.c*(np.arctan(nr1)/nr1)
+        no_rotE2 = 0.5*(n_xv2**2 + n_yv2**2 + n_zv2**2) - (m1**3/(nr2*mass_sum**2)) - self.c*(np.arctan(nr2)/nr2)
         no_rot_total_E = no_rotE1 + no_rotE2
 
-        rotE1 = 0.5*(xv1**2 + yv1**2 + zv1**2) - (mass_sum/r1) - self.c*(np.arctan(r1)/r1)
-        rotE2 = 0.5*(xv2**2 + yv2**2 + zv2**2) - (mass_sum/r2) - self.c*(np.arctan(r2)/r2)
+        rotE1 = 0.5*(xv1**2 + yv1**2 + zv1**2) - (m2**3/(r1*mass_sum**2)) - self.c*(np.arctan(r1)/r1)
+        rotE2 = 0.5*(xv2**2 + yv2**2 + zv2**2) - (m1**3/(r2*mass_sum**2)) - self.c*(np.arctan(r2)/r2)
         rot_total_E = rotE1 + rotE2
 
         self.no_rot_energy = no_rot_total_E
