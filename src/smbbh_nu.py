@@ -124,8 +124,8 @@ class SMBBH_NU:
 
         r1_relation_com = r1 - barycenter
         r2_relation_com = r2 - barycenter
-        v1_relation_com = v1 - barycenter
-        v2_relation_com = v2 - barycenter
+        v1_relation_com = v1
+        v2_relation_com = v2
         no_rot_dict = {'p1_orbit': r1_relation_com,
                        'p2_orbit': r2_relation_com,
                        'p1_velocity': v1_relation_com,
