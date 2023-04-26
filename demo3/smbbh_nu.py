@@ -78,11 +78,11 @@ class SMBBH_NU:
 
         # particle 2 velocity
         elif eq_index == 9:
-            return -mu * xi / (r ** 3) - self.potential(self.c, x2, r2)
+            return -mu * xi / (r ** 3) + self.potential(self.c, x2, r2)
         elif eq_index == 10:
-            return -mu * yi / (r ** 3) - self.potential(self.c, y2, r2)
+            return -mu * yi / (r ** 3) + self.potential(self.c, y2, r2)
         elif eq_index == 11:
-            return -mu * zi / (r ** 3) - self.potential(self.c, z2, r2)
+            return -mu * zi / (r ** 3) + self.potential(self.c, z2, r2)
 
         else:
             return 0
