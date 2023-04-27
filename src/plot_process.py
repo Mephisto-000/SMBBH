@@ -79,14 +79,18 @@ class Plot_Result:
             total_energy = self.no_rot_total_energy
             initial_energy = self.no_rot_init_energy
 
-        Et_divid_E0 = total_energy/initial_energy
-        plt.style.use("ggplot")
-        plt.figure(figsize=(10, 4))
-        plt.subplot()
-        plt.plot(self.time_length, Et_divid_E0, "-", color="darkblue")
-        plt.title(r'$E_{total}/E_{0}$,' + rf' ($E_{0}\approx$ {round(initial_energy, 4)})', fontsize=20)
-        plt.xlabel("Time", fontsize=10)
-        plt.show()
+        if initial_energy != 0:
+            Et_divid_E0 = total_energy/initial_energy
+            plt.style.use("ggplot")
+            plt.figure(figsize=(10, 4))
+            plt.subplot()
+            plt.plot(self.time_length, Et_divid_E0, "-", color="darkblue")
+            plt.title(r'$E_{total}/E_{0}$,' + rf' ($E_{0}\approx$ {round(initial_energy, 4)})', fontsize=20)
+            plt.xlabel("Time", fontsize=10)
+            plt.show()
+        else:
+            print("\033[31m initial energy is 0. \033[0m")
+            enter_key = input("")
 
     def plot_orbit_video(self, mode="rotation", show_mode='plot', title=None):
         if mode == "rotation":
