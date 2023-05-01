@@ -92,6 +92,46 @@ class Plot_Result:
             print("\033[31m initial energy is 0. \033[0m")
             enter_key = input("")
 
+    def plot_2D_orbit(self, mode="rotation", plane_choose="x-y"):
+        if mode == "rotation":
+            data_dict = self.rot_data
+            r1 = data_dict['p1_orbit']
+            r2 = data_dict['p2_orbit']
+        elif mode == "no_rotation":
+            data_dict = self.no_rot_data
+            r1 = data_dict['p1_orbit']
+            r2 = data_dict['p2_orbit']
+        else:
+            print("Test mode")
+            data_dict = self.no_rot_data
+            r1 = data_dict['p1_orbit']
+            r2 = data_dict['p2_orbit']
+
+        plt.style.use("ggplot")
+        if plane_choose == "x-y":
+            plt.plot(r1[:, 0], r1[:, 1], color="darkblue", label="P1 orbit")
+            plt.plot(r2[:, 0], r2[:, 1], color="red", label="P2 orbit")
+            plt.plot(0, 0, 'ko', label=r"$(0, 0)$")
+            plt.xlabel("X", fontsize=14)
+            plt.ylabel("Y", fontsize=14)
+        elif plane_choose == "x-z":
+            plt.plot(r1[:, 0], r1[:, 2], color="darkblue", label="P1 orbit")
+            plt.plot(r2[:, 0], r2[:, 2], color="red", label="P2 orbit")
+            plt.plot(0, 0, 'ko', label=r"$(0, 0)$")
+            plt.xlabel("X", fontsize=14)
+            plt.ylabel("Z", fontsize=14)
+        elif plane_choose == "y-z":
+            plt.plot(r1[:, 1], r1[:, 2], color="darkblue", label="P1 orbit")
+            plt.plot(r2[:, 1], r2[:, 2], color="red", label="P2 orbit")
+            plt.plot(0, 0, 'ko', label=r"$(0, 0)$")
+            plt.xlabel("Y", fontsize=14)
+            plt.ylabel("Z", fontsize=14)
+        else:
+            print("Error")
+        plt.axis("square")
+        plt.legend()
+        plt.show()
+
     def plot_orbit_video(self, mode="rotation", show_mode='plot', title=None):
         if mode == "rotation":
             data_dict = self.rot_data

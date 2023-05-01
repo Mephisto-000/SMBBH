@@ -40,10 +40,11 @@ if __name__ == "__main__":
         print("To display the total energy change chart for the supermassive binary black holes, please press 'c2'")
         print("To display the total energy change divided by the initial total energy chart for the "
               "supermassive binary black holes, please press 'c3'")
+        print("To display the 2D trajectory plot of a supermassive black hole binary, please press 'c4'.")
         print("To display the video of the trajectory chart for the supermassive binary black hole "
-              "orbit, please press 'c4'")
-        print("To save the video of the trajectory chart for the supermassive binary black hole "
               "orbit, please press 'c5'")
+        print("To save the video of the trajectory chart for the supermassive binary black hole "
+              "orbit, please press 'c6'")
         print("To exit, please press 'q'")
         print()
         print()
@@ -63,8 +64,12 @@ if __name__ == "__main__":
         elif test_command == "c3":
             plot.plot_total_energy_divid_initE(mode=rot_mod)
         elif test_command == "c4":
-            plot.plot_orbit_video(mode=rot_mod)
+            plot.plot_2D_orbit(mode=rot_mod, plane_choose="x-y")
+            plot.plot_2D_orbit(mode=rot_mod, plane_choose="x-z")
+            plot.plot_2D_orbit(mode=rot_mod, plane_choose="y-z")
         elif test_command == "c5":
+            plot.plot_orbit_video(mode=rot_mod)
+        elif test_command == "c6":
             plot.plot_orbit_video(mode=rot_mod, show_mode="save")
         else:
             print("Input Error! Please input again.")
