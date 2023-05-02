@@ -108,6 +108,8 @@ class Plot_Result:
             r2 = data_dict['p2_orbit']
 
         plt.style.use("ggplot")
+        plt.figure()
+        plt.subplot()
         if plane_choose == "x-y":
             plt.plot(r1[:, 0], r1[:, 1], color="darkblue", label="P1 orbit")
             plt.plot(r2[:, 0], r2[:, 1], color="red", label="P2 orbit")
@@ -148,6 +150,8 @@ class Plot_Result:
             r2 = data_dict['p2_orbit']
 
         plt.style.use("ggplot")
+        plt.figure(figsize=(10, 5))
+        plt.subplot()
         if plane_choose == "x":
             plt.plot(self.time_length, r1[:, 0], color="darkblue", label="P1 orbit")
             plt.plot(self.time_length, r2[:, 0], color="red", label="P2 orbit")
@@ -165,7 +169,7 @@ class Plot_Result:
             plt.ylabel("Z", fontsize=14)
         else:
             print("Error")
-        plt.legend()
+        plt.legend(loc="lower right")
         plt.show()
 
     def plot_orbit_video(self, mode="rotation", show_mode='plot', title=None):
