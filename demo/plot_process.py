@@ -92,7 +92,7 @@ class Plot_Result:
             print("\033[31m initial energy is 0. \033[0m")
             enter_key = input("")
 
-    def plot_2D_orbit(self, mode="rotation", plane_choose="x-y"):
+    def plot_2D_plane_orbit(self, mode="rotation", plane_choose="x-y"):
         if mode == "rotation":
             data_dict = self.rot_data
             r1 = data_dict['p1_orbit']
@@ -129,6 +129,42 @@ class Plot_Result:
         else:
             print("Error")
         plt.axis("square")
+        plt.legend()
+        plt.show()
+
+    def plot_2D_time_orbit(self, mode="rotation", plane_choose="x"):
+        if mode == "rotation":
+            data_dict = self.rot_data
+            r1 = data_dict['p1_orbit']
+            r2 = data_dict['p2_orbit']
+        elif mode == "no_rotation":
+            data_dict = self.no_rot_data
+            r1 = data_dict['p1_orbit']
+            r2 = data_dict['p2_orbit']
+        else:
+            print("Test mode")
+            data_dict = self.no_rot_data
+            r1 = data_dict['p1_orbit']
+            r2 = data_dict['p2_orbit']
+
+        plt.style.use("ggplot")
+        if plane_choose == "x":
+            plt.plot(self.time_length, r1[:, 0], color="darkblue", label="P1 orbit")
+            plt.plot(self.time_length, r2[:, 0], color="red", label="P2 orbit")
+            plt.xlabel("Time", fontsize=14)
+            plt.ylabel("X", fontsize=14)
+        elif plane_choose == "y":
+            plt.plot(self.time_length, r1[:, 1], color="darkblue", label="P1 orbit")
+            plt.plot(self.time_length, r2[:, 1], color="red", label="P2 orbit")
+            plt.xlabel("Time", fontsize=14)
+            plt.ylabel("Y", fontsize=14)
+        elif plane_choose == "z":
+            plt.plot(self.time_length, r1[:, 2], color="darkblue", label="P1 orbit")
+            plt.plot(self.time_length, r2[:, 2], color="red", label="P2 orbit")
+            plt.xlabel("Time", fontsize=14)
+            plt.ylabel("Z", fontsize=14)
+        else:
+            print("Error")
         plt.legend()
         plt.show()
 
