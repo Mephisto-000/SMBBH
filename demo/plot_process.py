@@ -35,7 +35,7 @@ class Plot_Result:
             r1 = data_dict['p1_orbit']
             r2 = data_dict['p2_orbit']
 
-        ax_len = self.radius * 0.75
+        ax_len = self.radius
         fig = plt.figure()
         ax = fig.add_subplot(111, projection="3d")
         ax.set_xlim3d(-ax_len, ax_len)
@@ -189,7 +189,7 @@ class Plot_Result:
 
         fig = plt.figure(figsize=(8, 8))
         ax = fig.add_subplot(111, projection='3d')
-        ax_len = self.radius * 0.75
+        ax_len = self.radius
         ax.set_xlim3d(-ax_len, ax_len)
         ax.set_ylim3d(-ax_len, ax_len)
         ax.set_zlim3d(-ax_len, ax_len)

@@ -8,7 +8,7 @@ class SMBBH_NU:
         self.__tl = tl
         self.t0 = t0
         self.tf = tf
-        self.__dt = (tf - t0) / (tl - 1)
+        self.__dt = (tf - t0) / tl
         self.__t_p = np.linspace(t0, tf, tl)
 
         self.bh_mass = {'m1': black_holes[0],
