@@ -122,7 +122,7 @@ class Plot_Result:
         else:
             print("Error")
         plt.axis("square")
-        plt.legend()
+        plt.legend(bbox_to_anchor=(1.15, 1))
         plt.show()
 
     def plot_2D_time_orbit(self, mode="rotation", plane_choose="x"):
@@ -147,7 +147,7 @@ class Plot_Result:
             plt.ylabel("Z", fontsize=14, rotation=0)
         else:
             print("Error")
-        plt.legend(loc="lower right")
+        plt.legend(bbox_to_anchor=(1.1, 1))
         plt.show()
 
     def plot_r_length_per_time(self, mode="rotation", particle="p1"):
