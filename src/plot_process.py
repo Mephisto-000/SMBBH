@@ -106,19 +106,19 @@ class Plot_Result:
             plt.plot(r2[:, 0], r2[:, 1], color="red", label="P2 orbit")
             plt.plot(0, 0, 'ko', label=r"$(0, 0)$")
             plt.xlabel("X", fontsize=14)
-            plt.ylabel("Y", fontsize=14)
+            plt.ylabel("Y", fontsize=14, rotation=0)
         elif plane_choose == "x-z":
             plt.plot(r1[:, 0], r1[:, 2], color="darkblue", label="P1 orbit")
             plt.plot(r2[:, 0], r2[:, 2], color="red", label="P2 orbit")
             plt.plot(0, 0, 'ko', label=r"$(0, 0)$")
             plt.xlabel("X", fontsize=14)
-            plt.ylabel("Z", fontsize=14)
+            plt.ylabel("Z", fontsize=14, rotation=0)
         elif plane_choose == "y-z":
             plt.plot(r1[:, 1], r1[:, 2], color="darkblue", label="P1 orbit")
             plt.plot(r2[:, 1], r2[:, 2], color="red", label="P2 orbit")
             plt.plot(0, 0, 'ko', label=r"$(0, 0)$")
             plt.xlabel("Y", fontsize=14)
-            plt.ylabel("Z", fontsize=14)
+            plt.ylabel("Z", fontsize=14, rotation=0)
         else:
             print("Error")
         plt.axis("square")
@@ -134,17 +134,17 @@ class Plot_Result:
             plt.plot(self.time_length, r1[:, 0], color="darkblue", label="P1 orbit")
             plt.plot(self.time_length, r2[:, 0], color="red", label="P2 orbit")
             plt.xlabel("Time", fontsize=14)
-            plt.ylabel("X", fontsize=14)
+            plt.ylabel("X", fontsize=14, rotation=0)
         elif plane_choose == "y":
             plt.plot(self.time_length, r1[:, 1], color="darkblue", label="P1 orbit")
             plt.plot(self.time_length, r2[:, 1], color="red", label="P2 orbit")
             plt.xlabel("Time", fontsize=14)
-            plt.ylabel("Y", fontsize=14)
+            plt.ylabel("Y", fontsize=14, rotation=0)
         elif plane_choose == "z":
             plt.plot(self.time_length, r1[:, 2], color="darkblue", label="P1 orbit")
             plt.plot(self.time_length, r2[:, 2], color="red", label="P2 orbit")
             plt.xlabel("Time", fontsize=14)
-            plt.ylabel("Z", fontsize=14)
+            plt.ylabel("Z", fontsize=14, rotation=0)
         else:
             print("Error")
         plt.legend(loc="lower right")
@@ -180,6 +180,7 @@ class Plot_Result:
         r12_y = r2[:, 1] - r1[:, 1]
         r12_z = r2[:, 2] - r1[:, 2]
         r12_len = np.sqrt(r12_x**2 + r12_y**2 + r12_z**2)
+        print(f"\n minimum length : {np.round(np.min(r12_len), 2)}")
         plt.plot(self.time_length, r12_len, color="green")
         plt.xlabel("Time", fontsize=14)
         plt.ylabel(r"$r_{12}$        ", fontsize=14, rotation=0)
