@@ -150,22 +150,40 @@ class Plot_Result:
         plt.legend(loc="lower right")
         plt.show()
 
-    # def plot_r_length_per_time(self, mode="rotation", particle="p1"):
-    #     if mode == "rotation":
-    #         data_dict = self.rot_data
-    #         r1 = data_dict['p1_orbit']
-    #         r2 = data_dict['p2_orbit']
-    #     elif mode == "no_rotation":
-    #         data_dict = self.no_rot_data
-    #         r1 = data_dict['p1_orbit']
-    #         r2 = data_dict['p2_orbit']
-    #     else:
-    #         print("Test mode")
-    #         data_dict = self.no_rot_data
-    #         r1 = data_dict['p1_orbit']
-    #         r2 = data_dict['p2_orbit']
+    def plot_r_length_per_time(self, mode="rotation", particle="p1"):
+        r1, r2 = self.__mode_choose(mode)
+        plt.style.use("ggplot")
+        plt.figure(figsize=(10, 5))
+        plt.subplot()
+        if particle == "p1":
+            x_orb, y_orb, z_orb = r1[:, 0], r1[:, 1], r1[:, 2]
+            r = np.sqrt(x_orb**2 + y_orb**2 + z_orb**2)
+            plt.plot(self.time_length, r, color="darkblue")
+            plt.xlabel("Time", fontsize=14)
+            plt.ylabel(r"$r_{1}$        ", fontsize=14, rotation=0)
+        elif particle == "p2":
+            x_orb, y_orb, z_orb = r2[:, 0], r2[:, 1], r2[:, 2]
+            r = np.sqrt(x_orb**2 + y_orb**2 + z_orb**2)
+            plt.plot(self.time_length, r, color="red")
+            plt.xlabel("Time", fontsize=14)
+            plt.ylabel(r"$r_{2}$        ", fontsize=14, rotation=0)
+        else:
+            print("Error")
+        plt.show()
 
-
+    def plot_r12_length_per_time(self, mode="rotation"):
+        r1, r2 = self.__mode_choose(mode)
+        plt.style.use("ggplot")
+        plt.figure(figsize=(10, 5))
+        plt.subplot()
+        r12_x = r2[:, 0] - r1[:, 0]
+        r12_y = r2[:, 1] - r1[:, 1]
+        r12_z = r2[:, 2] - r1[:, 2]
+        r12_len = np.sqrt(r12_x**2 + r12_y**2 + r12_z**2)
+        plt.plot(self.time_length, r12_len, color="green")
+        plt.xlabel("Time", fontsize=14)
+        plt.ylabel(r"$r_{12}$        ", fontsize=14, rotation=0)
+        plt.show()
 
     def plot_orbit_video(self, mode="rotation", show_mode='plot', title=None):
         if mode == "rotation":

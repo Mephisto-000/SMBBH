@@ -43,10 +43,12 @@ if __name__ == "__main__":
         print("To display the 2D trajectory plot of a supermassive black hole binary, please press 'c4'")
         print("To display the one-dimensional trajectory change of the supermassive binary black holes per unit time, "
               "please press 'c5'")
+        print("To display the distance between the center of mass of two black holes and the origin, please press 'c6'")
+        print("To display the distance between the center of mass of two black holes, please press 'c7'")
         print("To display the video of the trajectory chart for the supermassive binary black hole "
-              "orbit, please press 'c6'")
+              "orbit, please press 'c8'")
         print("To save the video of the trajectory chart for the supermassive binary black hole "
-              "orbit, please press 'c7'")
+              "orbit, please press 'c9'")
         print("To exit, please press 'q'")
         print()
         print()
@@ -73,8 +75,13 @@ if __name__ == "__main__":
             plot.plot_2D_time_orbit(mode=rot_mod, plane_choose="y")
             plot.plot_2D_time_orbit(mode=rot_mod, plane_choose="z")
         elif test_command == "c6":
-            plot.plot_orbit_video(mode=rot_mod)
+            plot.plot_r_length_per_time(mode=rot_mod, particle="p1")
+            plot.plot_r_length_per_time(mode=rot_mod, particle="p2")
         elif test_command == "c7":
+            plot.plot_r12_length_per_time(mode=rot_mod)
+        elif test_command == "c8":
+            plot.plot_orbit_video(mode=rot_mod)
+        elif test_command == "c9":
             plot.plot_orbit_video(mode=rot_mod, show_mode="save")
         else:
             print("Input Error! Please input again.")
