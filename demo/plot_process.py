@@ -19,22 +19,26 @@ class Plot_Result:
         self.tf = tf
         self.time_length = np.linspace(t0, tf, tl)
 
-    def plot_rk4_result(self, mode="rotation"):
+    def __mode_choose(self, mode="rotation"):
         if mode == "rotation":
             data_dict = self.rot_data
             r1 = data_dict['p1_orbit']
             r2 = data_dict['p2_orbit']
-
+            return r1, r2
         elif mode == "no_rotation":
             data_dict = self.no_rot_data
             r1 = data_dict['p1_orbit']
             r2 = data_dict['p2_orbit']
+            return r1, r2
         else:
             print("Test mode")
             data_dict = self.no_rot_data
             r1 = data_dict['p1_orbit']
             r2 = data_dict['p2_orbit']
+            return r1, r2
 
+    def plot_rk4_result(self, mode="rotation"):
+        r1, r2 = self.__mode_choose(mode)
         ax_len = self.radius
         fig = plt.figure()
         ax = fig.add_subplot(111, projection="3d")
@@ -59,12 +63,11 @@ class Plot_Result:
             total_energy = self.no_rot_total_energy
 
         plt.style.use("ggplot")
-        plt.figure(figsize=(10, 4))
+        plt.figure(figsize=(10, 5))
         plt.subplot()
         plt.plot(self.time_length, total_energy, "-", color="darkblue")
-        plt.title(r'$E_{total}$,' + r' ($Max(|E_{total}|)\approx$' + f'{round(max(np.abs(total_energy)), 4)})',
-                  fontsize=20)
-        plt.xlabel("Time", fontsize=10)
+        plt.xlabel("t", fontsize=14)
+        plt.ylabel(r"$E(t)$        ", fontsize=14, rotation=0)
         plt.show()
 
     def plot_total_energy_divid_initE(self, mode="rotation"):
@@ -82,94 +85,104 @@ class Plot_Result:
         if initial_energy != 0:
             Et_divid_E0 = total_energy/initial_energy
             plt.style.use("ggplot")
-            plt.figure(figsize=(10, 4))
+            plt.figure(figsize=(10, 5))
             plt.subplot()
             plt.plot(self.time_length, Et_divid_E0, "-", color="darkblue")
-            plt.title(r'$E_{total}/E_{0}$,' + rf' ($E_{0}\approx$ {round(initial_energy, 4)})', fontsize=20)
-            plt.xlabel("Time", fontsize=10)
+            plt.xlabel("t", fontsize=14)
+            plt.ylabel(r"$\frac{E(t)}{E_{0}}$        ", fontsize=14, rotation=0)
             plt.show()
         else:
             print("\033[31m initial energy is 0. \033[0m")
             enter_key = input("")
 
     def plot_2D_plane_orbit(self, mode="rotation", plane_choose="x-y"):
-        if mode == "rotation":
-            data_dict = self.rot_data
-            r1 = data_dict['p1_orbit']
-            r2 = data_dict['p2_orbit']
-        elif mode == "no_rotation":
-            data_dict = self.no_rot_data
-            r1 = data_dict['p1_orbit']
-            r2 = data_dict['p2_orbit']
-        else:
-            print("Test mode")
-            data_dict = self.no_rot_data
-            r1 = data_dict['p1_orbit']
-            r2 = data_dict['p2_orbit']
-
+        r1, r2 = self.__mode_choose(mode)
         plt.style.use("ggplot")
         plt.figure()
         plt.subplot()
         if plane_choose == "x-y":
-            plt.plot(r1[:, 0], r1[:, 1], color="darkblue", label="P1 orbit")
-            plt.plot(r2[:, 0], r2[:, 1], color="red", label="P2 orbit")
+            plt.plot(r1[:, 0], r1[:, 1], color="darkblue", label="P1 orbit", alpha=0.4)
+            plt.plot(r2[:, 0], r2[:, 1], color="red", label="P2 orbit", alpha=0.4)
             plt.plot(0, 0, 'ko', label=r"$(0, 0)$")
             plt.xlabel("X", fontsize=14)
-            plt.ylabel("Y", fontsize=14)
+            plt.ylabel("Y", fontsize=14, rotation=0)
         elif plane_choose == "x-z":
-            plt.plot(r1[:, 0], r1[:, 2], color="darkblue", label="P1 orbit")
-            plt.plot(r2[:, 0], r2[:, 2], color="red", label="P2 orbit")
+            plt.plot(r1[:, 0], r1[:, 2], color="darkblue", label="P1 orbit", alpha=0.4)
+            plt.plot(r2[:, 0], r2[:, 2], color="red", label="P2 orbit", alpha=0.4)
             plt.plot(0, 0, 'ko', label=r"$(0, 0)$")
             plt.xlabel("X", fontsize=14)
-            plt.ylabel("Z", fontsize=14)
+            plt.ylabel("Z", fontsize=14, rotation=0)
         elif plane_choose == "y-z":
-            plt.plot(r1[:, 1], r1[:, 2], color="darkblue", label="P1 orbit")
-            plt.plot(r2[:, 1], r2[:, 2], color="red", label="P2 orbit")
+            plt.plot(r1[:, 1], r1[:, 2], color="darkblue", label="P1 orbit", alpha=0.4)
+            plt.plot(r2[:, 1], r2[:, 2], color="red", label="P2 orbit", alpha=0.4)
             plt.plot(0, 0, 'ko', label=r"$(0, 0)$")
             plt.xlabel("Y", fontsize=14)
-            plt.ylabel("Z", fontsize=14)
+            plt.ylabel("Z", fontsize=14, rotation=0)
         else:
             print("Error")
         plt.axis("square")
-        plt.legend()
+        plt.legend(bbox_to_anchor=(1.35, 1))
         plt.show()
 
     def plot_2D_time_orbit(self, mode="rotation", plane_choose="x"):
-        if mode == "rotation":
-            data_dict = self.rot_data
-            r1 = data_dict['p1_orbit']
-            r2 = data_dict['p2_orbit']
-        elif mode == "no_rotation":
-            data_dict = self.no_rot_data
-            r1 = data_dict['p1_orbit']
-            r2 = data_dict['p2_orbit']
-        else:
-            print("Test mode")
-            data_dict = self.no_rot_data
-            r1 = data_dict['p1_orbit']
-            r2 = data_dict['p2_orbit']
-
+        r1, r2 = self.__mode_choose(mode)
         plt.style.use("ggplot")
         plt.figure(figsize=(10, 5))
         plt.subplot()
         if plane_choose == "x":
-            plt.plot(self.time_length, r1[:, 0], color="darkblue", label="P1 orbit")
-            plt.plot(self.time_length, r2[:, 0], color="red", label="P2 orbit")
-            plt.xlabel("Time", fontsize=14)
-            plt.ylabel("X", fontsize=14)
+            plt.plot(self.time_length, r1[:, 0], color="darkblue", label="P1")
+            plt.plot(self.time_length, r2[:, 0], color="red", label="P2")
+            plt.xlabel("t", fontsize=14)
+            plt.ylabel("X", fontsize=14, rotation=0)
         elif plane_choose == "y":
-            plt.plot(self.time_length, r1[:, 1], color="darkblue", label="P1 orbit")
-            plt.plot(self.time_length, r2[:, 1], color="red", label="P2 orbit")
-            plt.xlabel("Time", fontsize=14)
-            plt.ylabel("Y", fontsize=14)
+            plt.plot(self.time_length, r1[:, 1], color="darkblue", label="P1")
+            plt.plot(self.time_length, r2[:, 1], color="red", label="P2")
+            plt.xlabel("t", fontsize=14)
+            plt.ylabel("Y", fontsize=14, rotation=0)
         elif plane_choose == "z":
-            plt.plot(self.time_length, r1[:, 2], color="darkblue", label="P1 orbit")
-            plt.plot(self.time_length, r2[:, 2], color="red", label="P2 orbit")
-            plt.xlabel("Time", fontsize=14)
-            plt.ylabel("Z", fontsize=14)
+            plt.plot(self.time_length, r1[:, 2], color="darkblue", label="P1")
+            plt.plot(self.time_length, r2[:, 2], color="red", label="P2")
+            plt.xlabel("t", fontsize=14)
+            plt.ylabel("Z", fontsize=14, rotation=0)
         else:
             print("Error")
-        plt.legend(loc="lower right")
+        plt.legend(bbox_to_anchor=(1.0, 1))
+        plt.show()
+
+    def plot_r_length_per_time(self, mode="rotation", particle="p1"):
+        r1, r2 = self.__mode_choose(mode)
+        plt.style.use("ggplot")
+        plt.figure(figsize=(10, 5))
+        plt.subplot()
+        if particle == "p1":
+            x_orb, y_orb, z_orb = r1[:, 0], r1[:, 1], r1[:, 2]
+            r = np.sqrt(x_orb**2 + y_orb**2 + z_orb**2)
+            plt.plot(self.time_length, r, color="darkblue")
+            plt.xlabel("t", fontsize=14)
+            plt.ylabel(r"$r_{1}$        ", fontsize=14, rotation=0)
+        elif particle == "p2":
+            x_orb, y_orb, z_orb = r2[:, 0], r2[:, 1], r2[:, 2]
+            r = np.sqrt(x_orb**2 + y_orb**2 + z_orb**2)
+            plt.plot(self.time_length, r, color="red")
+            plt.xlabel("t", fontsize=14)
+            plt.ylabel(r"$r_{2}$        ", fontsize=14, rotation=0)
+        else:
+            print("Error")
+        plt.show()
+
+    def plot_r12_length_per_time(self, mode="rotation"):
+        r1, r2 = self.__mode_choose(mode)
+        plt.style.use("ggplot")
+        plt.figure(figsize=(10, 5))
+        plt.subplot()
+        r12_x = r2[:, 0] - r1[:, 0]
+        r12_y = r2[:, 1] - r1[:, 1]
+        r12_z = r2[:, 2] - r1[:, 2]
+        r12_len = np.sqrt(r12_x**2 + r12_y**2 + r12_z**2)
+        print(f"\n minimum length : {np.round(np.min(r12_len), 2)}")
+        plt.plot(self.time_length, r12_len, color="green")
+        plt.xlabel("t", fontsize=14)
+        plt.ylabel(r"$r_{12}$        ", fontsize=14, rotation=0)
         plt.show()
 
     def plot_orbit_video(self, mode="rotation", show_mode='plot', title=None):
