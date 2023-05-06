@@ -68,7 +68,6 @@ if __name__ == "__main__":
         elif test_command == "c4":
             plot.plot_2D_plane_orbit(mode=rot_mod, plane_choose="x-y")
             plot.plot_2D_plane_orbit(mode=rot_mod, plane_choose="x-z")
-            plot.plot_2D_plane_orbit(mode=rot_mod, plane_choose="y-z")
         elif test_command == "c5":
             plot.plot_2D_time_orbit(mode=rot_mod, plane_choose="x")
             plot.plot_2D_time_orbit(mode=rot_mod, plane_choose="y")

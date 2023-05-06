@@ -19,22 +19,26 @@ class Plot_Result:
         self.tf = tf
         self.time_length = np.linspace(t0, tf, tl)
 
-    def plot_rk4_result(self, mode="rotation"):
+    def __mode_choose(self, mode="rotation"):
         if mode == "rotation":
             data_dict = self.rot_data
             r1 = data_dict['p1_orbit']
             r2 = data_dict['p2_orbit']
-
+            return r1, r2
         elif mode == "no_rotation":
             data_dict = self.no_rot_data
             r1 = data_dict['p1_orbit']
             r2 = data_dict['p2_orbit']
+            return r1, r2
         else:
             print("Test mode")
             data_dict = self.no_rot_data
             r1 = data_dict['p1_orbit']
             r2 = data_dict['p2_orbit']
+            return r1, r2
 
+    def plot_rk4_result(self, mode="rotation"):
+        r1, r2 = self.__mode_choose(mode)
         ax_len = self.radius
         fig = plt.figure()
         ax = fig.add_subplot(111, projection="3d")
@@ -93,20 +97,7 @@ class Plot_Result:
             enter_key = input("")
 
     def plot_2D_plane_orbit(self, mode="rotation", plane_choose="x-y"):
-        if mode == "rotation":
-            data_dict = self.rot_data
-            r1 = data_dict['p1_orbit']
-            r2 = data_dict['p2_orbit']
-        elif mode == "no_rotation":
-            data_dict = self.no_rot_data
-            r1 = data_dict['p1_orbit']
-            r2 = data_dict['p2_orbit']
-        else:
-            print("Test mode")
-            data_dict = self.no_rot_data
-            r1 = data_dict['p1_orbit']
-            r2 = data_dict['p2_orbit']
-
+        r1, r2 = self.__mode_choose(mode)
         plt.style.use("ggplot")
         plt.figure()
         plt.subplot()
@@ -135,20 +126,7 @@ class Plot_Result:
         plt.show()
 
     def plot_2D_time_orbit(self, mode="rotation", plane_choose="x"):
-        if mode == "rotation":
-            data_dict = self.rot_data
-            r1 = data_dict['p1_orbit']
-            r2 = data_dict['p2_orbit']
-        elif mode == "no_rotation":
-            data_dict = self.no_rot_data
-            r1 = data_dict['p1_orbit']
-            r2 = data_dict['p2_orbit']
-        else:
-            print("Test mode")
-            data_dict = self.no_rot_data
-            r1 = data_dict['p1_orbit']
-            r2 = data_dict['p2_orbit']
-
+        r1, r2 = self.__mode_choose(mode)
         plt.style.use("ggplot")
         plt.figure(figsize=(10, 5))
         plt.subplot()
@@ -171,6 +149,23 @@ class Plot_Result:
             print("Error")
         plt.legend(loc="lower right")
         plt.show()
+
+    # def plot_r_length_per_time(self, mode="rotation", particle="p1"):
+    #     if mode == "rotation":
+    #         data_dict = self.rot_data
+    #         r1 = data_dict['p1_orbit']
+    #         r2 = data_dict['p2_orbit']
+    #     elif mode == "no_rotation":
+    #         data_dict = self.no_rot_data
+    #         r1 = data_dict['p1_orbit']
+    #         r2 = data_dict['p2_orbit']
+    #     else:
+    #         print("Test mode")
+    #         data_dict = self.no_rot_data
+    #         r1 = data_dict['p1_orbit']
+    #         r2 = data_dict['p2_orbit']
+
+
 
     def plot_orbit_video(self, mode="rotation", show_mode='plot', title=None):
         if mode == "rotation":
