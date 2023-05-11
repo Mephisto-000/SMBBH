@@ -38,6 +38,7 @@ class SMBBH_NU:
         self.no_rot_energy_0 = None
         self.energy = None
         self.energy_0 = None
+        self.z_vel = None
 
     def __two_body_system(self, eq_index, tmp_array, mu):
 
@@ -217,17 +218,27 @@ class SMBBH_NU:
         self.energy = rot_total_E
         self.energy_0 = rot_total_E[0]
 
+    def z_axis_velocity(self):
+        rot_data = self.rot_result
+        zv1 = rot_data['p1_velocity'][0:, 2]
+        zv2 = rot_data['p2_velocity'][0:, 2]
+
+        z_ratio = zv1 / zv2
+        self.z_vel = z_ratio
+
     def run(self):
         self.no_rot_result()
         self.rotation_data()
         self.cal_total_energy()
+        self.z_axis_velocity()
 
         all_result = {'no_rot_data': self.noRot_result,
                       'rot_data': self.rot_result,
                       'no_rot_energy': self.no_rot_energy,
                       'no_rot_energy0': self.no_rot_energy_0,
                       'rot_energy': self.energy,
-                      'rot_energy0': self.energy_0}
+                      'rot_energy0': self.energy_0,
+                      'rot_z_vel_ratio': self.z_vel}
 
         return all_result
 
