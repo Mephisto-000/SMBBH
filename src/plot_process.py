@@ -66,8 +66,8 @@ class Plot_Result:
         plt.figure(figsize=(10, 5))
         plt.subplot()
         plt.plot(self.time_length, total_energy, "-", color="darkblue")
-        plt.xlabel("t", fontsize=14)
-        plt.ylabel(r"$E(t)$        ", fontsize=14, rotation=0)
+        plt.xlabel("t", fontsize=20)
+        plt.ylabel(r"$E(t)$        ", fontsize=20, rotation=0)
         plt.show()
 
     def plot_total_energy_divid_initE(self, mode="rotation"):
@@ -88,8 +88,8 @@ class Plot_Result:
             plt.figure(figsize=(10, 5))
             plt.subplot()
             plt.plot(self.time_length, Et_divid_E0, "-", color="darkblue")
-            plt.xlabel("t", fontsize=14)
-            plt.ylabel(r"$\frac{E(t)}{E_{0}}$        ", fontsize=14, rotation=0)
+            plt.xlabel("t", fontsize=20)
+            plt.ylabel(r"$\frac{E(t)}{E_{0}}$        ", fontsize=20, rotation=0)
             plt.show()
         else:
             print("\033[31m initial energy is 0. \033[0m")
@@ -104,20 +104,20 @@ class Plot_Result:
             plt.plot(r1[:, 0], r1[:, 1], color="darkblue", label="P1 orbit", alpha=0.4)
             plt.plot(r2[:, 0], r2[:, 1], color="red", label="P2 orbit", alpha=0.4)
             plt.plot(0, 0, 'ko', label=r"$(0, 0)$")
-            plt.xlabel("X", fontsize=14)
-            plt.ylabel("Y", fontsize=14, rotation=0)
+            plt.xlabel("X", fontsize=20)
+            plt.ylabel("Y", fontsize=20, rotation=0)
         elif plane_choose == "x-z":
             plt.plot(r1[:, 0], r1[:, 2], color="darkblue", label="P1 orbit", alpha=0.4)
             plt.plot(r2[:, 0], r2[:, 2], color="red", label="P2 orbit", alpha=0.4)
             plt.plot(0, 0, 'ko', label=r"$(0, 0)$")
-            plt.xlabel("X", fontsize=14)
-            plt.ylabel("Z", fontsize=14, rotation=0)
+            plt.xlabel("X", fontsize=20)
+            plt.ylabel("Z", fontsize=20, rotation=0)
         elif plane_choose == "y-z":
             plt.plot(r1[:, 1], r1[:, 2], color="darkblue", label="P1 orbit", alpha=0.4)
             plt.plot(r2[:, 1], r2[:, 2], color="red", label="P2 orbit", alpha=0.4)
             plt.plot(0, 0, 'ko', label=r"$(0, 0)$")
-            plt.xlabel("Y", fontsize=14)
-            plt.ylabel("Z", fontsize=14, rotation=0)
+            plt.xlabel("Y", fontsize=20)
+            plt.ylabel("Z", fontsize=20, rotation=0)
         else:
             print("Error")
         plt.axis("square")
@@ -132,22 +132,22 @@ class Plot_Result:
         if plane_choose == "x":
             plt.plot(self.time_length, r1[:, 0], color="darkblue", label="P1")
             plt.plot(self.time_length, r2[:, 0], color="red", label="P2")
-            plt.xlabel("t", fontsize=14)
-            plt.ylabel("X", fontsize=14, rotation=0)
+            plt.xlabel("t", fontsize=20)
+            plt.ylabel("X", fontsize=20, rotation=0)
             plt.legend(bbox_to_anchor=(1.1, 1))
             plt.show()
         elif plane_choose == "y":
             plt.plot(self.time_length, r1[:, 1], color="darkblue", label="P1")
             plt.plot(self.time_length, r2[:, 1], color="red", label="P2")
-            plt.xlabel("t", fontsize=14)
-            plt.ylabel("Y", fontsize=14, rotation=0)
+            plt.xlabel("t", fontsize=20)
+            plt.ylabel("Y", fontsize=20, rotation=0)
             plt.legend(bbox_to_anchor=(1.1, 1))
             plt.show()
         elif plane_choose == "z":
             plt.plot(self.time_length, r1[:, 2], color="darkblue", label="P1")
             plt.plot(self.time_length, r2[:, 2], color="red", label="P2")
-            plt.xlabel("t", fontsize=14)
-            plt.ylabel("Z", fontsize=14, rotation=0)
+            plt.xlabel("t", fontsize=20)
+            plt.ylabel("Z", fontsize=20, rotation=0)
             plt.legend(bbox_to_anchor=(1.1, 1))
             plt.show()
         else:
@@ -162,14 +162,14 @@ class Plot_Result:
             x_orb, y_orb, z_orb = r1[:, 0], r1[:, 1], r1[:, 2]
             r = np.sqrt(x_orb**2 + y_orb**2 + z_orb**2)
             plt.plot(self.time_length, r, color="darkblue")
-            plt.xlabel("t", fontsize=14)
-            plt.ylabel(r"$r_{1}$        ", fontsize=14, rotation=0)
+            plt.xlabel("t", fontsize=20)
+            plt.ylabel(r"$r_{1}$        ", fontsize=20, rotation=0)
         elif particle == "p2":
             x_orb, y_orb, z_orb = r2[:, 0], r2[:, 1], r2[:, 2]
             r = np.sqrt(x_orb**2 + y_orb**2 + z_orb**2)
             plt.plot(self.time_length, r, color="red")
-            plt.xlabel("t", fontsize=14)
-            plt.ylabel(r"$r_{2}$        ", fontsize=14, rotation=0)
+            plt.xlabel("t", fontsize=20)
+            plt.ylabel(r"$r_{2}$        ", fontsize=20, rotation=0)
         else:
             print("Error")
         plt.show()
@@ -185,8 +185,8 @@ class Plot_Result:
         r12_len = np.sqrt(r12_x**2 + r12_y**2 + r12_z**2)
         print(f"\n minimum length : {np.round(np.min(r12_len), 2)}")
         plt.plot(self.time_length, r12_len, color="green")
-        plt.xlabel("t", fontsize=14)
-        plt.ylabel(r"$r_{12}$        ", fontsize=14, rotation=0)
+        plt.xlabel("t", fontsize=20)
+        plt.ylabel(r"$r_{12}$        ", fontsize=20, rotation=0)
         plt.show()
 
     def plot_orbit_video(self, mode="rotation", show_mode='plot', title=None):

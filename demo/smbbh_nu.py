@@ -224,7 +224,7 @@ class SMBBH_NU:
         zv2 = rot_data['p2_velocity'][0:, 2]
 
         z_ratio = zv1 / zv2
-        self.z_vel = z_ratio
+        self.z_vel = np.abs(z_ratio)
 
     def run(self):
         self.no_rot_result()
