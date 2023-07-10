@@ -2,5 +2,6 @@
 *.idea
 *.ipynb_checkpoints
 *.pdf
+tmp/
 test/
 __pycache__
