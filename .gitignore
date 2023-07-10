@@ -2,6 +2,7 @@
 *.idea
 *.ipynb_checkpoints
 *.pdf
+legacy_src/
 tmp/
 test/
 __pycache__
