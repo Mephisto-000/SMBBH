@@ -55,6 +55,39 @@ $m_{2}/m_{1}$ : mass ratio.
 - [Model D1](https://github.com/Mephisto-000/SMBBH/blob/main/demo/model_D1.ipynb)
 - [Model D2](https://github.com/Mephisto-000/SMBBH/blob/main/demo/model_D2.ipynb)
 
+
+
+## Usage
+
+Please download the `src` folder and navigate to the `src` folder.
+Open the terminal:
+
+```shell
+$ python main.py
+```
+
+Then you will see:
+
+```shell
+To display the trajectory chart for the supermassive binary black hole orbit, please press 'c1'
+To display the total energy change chart for the supermassive binary black holes, please press 'c2'
+To display the total energy change divided by the initial total energy chart for the supermassive binary black holes, please press 'c3'
+To display the 2D trajectory plot of a supermassive black hole binary, please press 'c4'
+To display the one-dimensional trajectory change of the supermassive binary black holes per unit time, please press 'c5'
+To display the distance between the center of mass of two black holes and the origin, please press 'c6'
+To display the distance between the center of mass of two black holes, please press 'c7'
+To display the video of the trajectory chart for the supermassive binary black hole orbit, please press 'c8'
+To save the video of the trajectory chart for the supermassive binary black hole orbit, please press 'c9'
+To exit, please press 'q'
+
+
+Please input the test case: 
+```
+
+
+
+
+
 ## License
 
 [MIT](https://github.com/Mephisto-000/SMBBH/blob/main/LICENSE)
