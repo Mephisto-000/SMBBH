@@ -195,6 +195,4 @@ dependencies:
   - zipp=3.8.0=py38h06a4308_0
   - zlib=1.2.12=h7f8727e_2
   - zstd=1.5.2=ha4553b6_0
-  - pip:
-      - sdss==1.1.0
 prefix: /home/mephisto/anaconda3/envs/smbbh
