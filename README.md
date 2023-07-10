@@ -28,3 +28,6 @@ $ conda activate smbbh
 
 
 
+## License
+
+[MIT](https://github.com/Mephisto-000/SMBBH/blob/main/LICENSE)
