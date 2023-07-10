@@ -18,9 +18,9 @@ if __name__ == "__main__":
     t_f = 50  # 50
     tl = t_f*10
     radius = 2  # 2
-    eccentricity = 0.7  # 0.7
+    eccentricity = 0.5  # 0.7
     angles = [np.pi/6, np.pi/4, np.pi/6]  # omega, I, Omega
-    constant_c = 0.9  # 0.9
+    constant_c = 0.2  # 0.9
 
     experiment_1 = SMBBH_NU(black_hole_mass,
                             t0=t_0,
