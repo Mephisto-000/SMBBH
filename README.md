@@ -59,7 +59,7 @@ $m_{2}/m_{1}$ : mass ratio.
 
 ## Usage
 
-Please download the `src` folder and navigate to the `src` folder.
+Please download the `src` folder and navigate to the `src` folder.  
 Open the terminal:
 
 ```shell
