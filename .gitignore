@@ -1,7 +1,6 @@
 *.mp4
 *.idea
 *.ipynb_checkpoints
-*.pdf
 legacy_src/
 tmp/
 test/
