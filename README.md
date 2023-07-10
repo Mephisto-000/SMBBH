@@ -26,12 +26,14 @@ $ conda activate smbbh
 
 ## Contents
 
-$E_{0}$ : initial total energy.
-$V_{i}(0)$ : initial velocity of particle 1 or particle 2.
-$|v_{1,\hat{z}}|/|v_{2,\hat{z}}|$ : orbital radial velocity ratio.
-$m_{2}/m_{1}$ : mass ratio.
+$E_{0}$ : initial total energy.  
+$V_{i}(0)$ : initial velocity of particle 1 or particle 2.  
+$|v_{1,\hat{z}}|/|v_{2,\hat{z}}|$ : orbital radial velocity ratio.  
+$m_{2}/m_{1}$ : mass ratio.  
 
 ### Results:
+
+
 
 | Model |  $E_{0}$   | $V_{i}^{2}(0)$ | $m_{2}/m_{1}$ | maximum $|v_{1,\hat{z}}|/|v_{2, \hat{z}}|$ | minimum $|v_{1,\hat{z}}|/|v_{2, \hat{z}}|$ |
 | :---: | :--------: | :------------: | :-----------: | :----------------------------------------: | :----------------------------------------: |
